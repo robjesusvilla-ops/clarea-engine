@@ -41,7 +41,11 @@ dev = [
 [project.scripts]
 clarea = "clarea.cli:app"
 
+[tool.setuptools.packages.find]
+include = ["clarea*"]
+
 [project.urls]
 Homepage = "https://github.com/robjesusvilla-ops/clarea-engine"
 Repository = "https://github.com/robjesusvilla-ops/clarea-engine"
 Issues = "https://github.com/robjesusvilla-ops/clarea-engine/issues"
+
