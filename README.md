@@ -52,13 +52,13 @@ graph TD
 ```bash
 git clone https://github.com/robjesusvilla-ops/clarea-engine.git
 cd clarea-engine
-pip install -r requirements.txt
+pip install -e .          # add ".[mcp]" for the MCP server, ".[dev]" for tests
 ```
 
 ### 2. Run CLI Analysis
 ```bash
 # Analyze a dataset and output the report
-python clarea/cli.py analyze examples/sample_facebook_metrics.json --output executive_report.md
+clarea examples/sample_facebook_metrics.json --output executive_report.md
 ```
 
 ### 3. Native Model Context Protocol (MCP) Setup for Claude
