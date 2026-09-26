@@ -9,6 +9,7 @@ from typing import Dict, Any, List
 from clarea.core.parser import MetricParser
 from clarea.core.analyzer import MetricAnalyzer
 from clarea.generators.diagnosis import DiagnosisEngine
+from clarea.generators.manager_view import ManagerViewGenerator
 from clarea.generators.report import ReportGenerator
 
 def handle_analyze_metrics(arguments: Dict[str, Any]) -> Dict[str, Any]:
@@ -20,6 +21,7 @@ def handle_analyze_metrics(arguments: Dict[str, Any]) -> Dict[str, Any]:
     analyzer = MetricAnalyzer(summary)
     insight = DiagnosisEngine.generate_local_insight(summary)
     markdown_report = ReportGenerator.to_markdown(summary, insight)
+    manager_view = ManagerViewGenerator.generate(summary, insight)
 
     return {
         "brand_name": summary.brand_name,
@@ -29,6 +31,7 @@ def handle_analyze_metrics(arguments: Dict[str, Any]) -> Dict[str, Any]:
         "conversion_rate": analyzer.calculate_message_conversion_rate(),
         "vanity_ratio": analyzer.calculate_vanity_vs_business_ratio(),
         "executive_summary": insight.executive_summary,
+        "manager_view": manager_view.model_dump(),
         "rule_findings": [f.model_dump() for f in insight.rule_findings],
         "markdown_report": markdown_report
     }

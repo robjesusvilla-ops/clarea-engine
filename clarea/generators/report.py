@@ -1,6 +1,7 @@
 from typing import Optional
 from clarea.core.models import PeriodSummary, DiagnosticInsight
 from clarea.core.analyzer import MetricAnalyzer
+from clarea.generators.manager_view import ManagerViewGenerator
 
 class ReportGenerator:
     """Compiles structured Markdown and Executive B2B reports for agencies and managers."""
@@ -15,6 +16,10 @@ class ReportGenerator:
         md = []
         md.append(f"# 📊 Reporte de Inteligencia de Decisiones: {summary.brand_name}")
         md.append(f"**Plataforma:** {summary.platform} | **Periodo Analizado:** {summary.period_label}")
+        md.append("")
+        md.append("---")
+        md.append("")
+        md.append(ManagerViewGenerator.to_markdown(ManagerViewGenerator.generate(summary, insight)))
         md.append("")
         md.append("---")
         md.append("")

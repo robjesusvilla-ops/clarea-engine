@@ -3,6 +3,20 @@
 
 ---
 
+## 🚦 Vista Gerente — Qhatai Piscinas (Mayo 2026)
+
+**Estado: 🟢 Saludable** — La cuenta genera mensajes de venta de forma sostenida.
+
+| | |
+| :--- | :--- |
+| 🏆 **Logro principal** | Los mensajes de venta crecieron +28.5% (94 en el periodo). |
+| 🚧 **Cuello de botella** | Escalabilidad de alcance para sostener la alta demanda de cotizaciones. |
+| 🎯 **Próxima decisión** | Publicar guías de costos, comparativas de materiales y checklists de errores comunes antes de contratar. |
+
+Alcance: 38,450 (+18.4%) · Mensajes de venta: 94 (+28.5%) · Seguidores nuevos: 210
+
+---
+
 ## 📈 1. Métricas Principales de Rendimiento
 
 | Métrica | Valor Total | Variación vs Anterior | Interpretación Rápida |

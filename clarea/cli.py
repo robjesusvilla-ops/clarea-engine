@@ -14,6 +14,7 @@ from clarea.core.parser import MetricParser
 from clarea.core.analyzer import MetricAnalyzer
 from clarea.generators.diagnosis import DiagnosisEngine
 from clarea.generators.report import ReportGenerator
+from clarea.generators.manager_view import ManagerViewGenerator, STATUS_LABELS
 
 app = typer.Typer(help="Clarea Engine CLI - Transform raw marketing metrics into strategic business decisions.")
 console = Console()
@@ -42,6 +43,18 @@ def analyze(
 
     analyzer = MetricAnalyzer(summary)
     insight = DiagnosisEngine.generate_local_insight(summary)
+
+    # 0. Manager View (traffic light)
+    view = ManagerViewGenerator.generate(summary, insight)
+    border = {"saludable": "green", "alerta": "yellow", "critico": "red"}[view.status]
+    console.print(Panel(
+        f"[bold]Estado: {STATUS_LABELS[view.status]}[/bold] — {view.status_reason}\n\n"
+        f"[bold]🏆 Logro principal:[/bold] {view.main_achievement}\n"
+        f"[bold]🚧 Cuello de botella:[/bold] {view.bottleneck}\n"
+        f"[bold]🎯 Próxima decisión:[/bold] {view.next_decision}",
+        title="🚦 Vista Gerente",
+        border_style=border
+    ))
 
     # 1. Metric Overview Table
     table = Table(title=f"📊 Performance Overview: {summary.brand_name} ({summary.platform})")
