@@ -31,6 +31,14 @@ class PeriodSummary(BaseModel):
     posts_count: int
     posts: List[PostMetric] = []
 
+class RuleFinding(BaseModel):
+    rule_id: str
+    title: str
+    severity: str = Field(..., description="critico, alerta u oportunidad")
+    diagnosis: str
+    prescription: str
+    evidence: str
+
 class DiagnosticInsight(BaseModel):
     executive_summary: str
     vanity_vs_business_ratio: float
@@ -41,3 +49,4 @@ class DiagnosticInsight(BaseModel):
     recommended_actions: List[str]
     suggested_hooks: List[str]
     suggested_ctas: List[str]
+    rule_findings: List[RuleFinding] = []

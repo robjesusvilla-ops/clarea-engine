@@ -29,6 +29,7 @@ def handle_analyze_metrics(arguments: Dict[str, Any]) -> Dict[str, Any]:
         "conversion_rate": analyzer.calculate_message_conversion_rate(),
         "vanity_ratio": analyzer.calculate_vanity_vs_business_ratio(),
         "executive_summary": insight.executive_summary,
+        "rule_findings": [f.model_dump() for f in insight.rule_findings],
         "markdown_report": markdown_report
     }
 

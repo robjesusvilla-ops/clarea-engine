@@ -38,6 +38,14 @@ class ReportGenerator:
             md.append(f"- {f}")
         md.append(f"- **Cuello de Botella Principal:** {insight.primary_growth_bottleneck}")
         md.append("")
+        if insight.rule_findings:
+            icons = {"critico": "🔴", "alerta": "🟡", "oportunidad": "🟢"}
+            md.append("### 🧩 Situaciones Detectadas:")
+            for f in insight.rule_findings:
+                md.append(f"- {icons.get(f.severity, '•')} **{f.title}** — {f.diagnosis}  ")
+                md.append(f"  *Dato:* {f.evidence}  ")
+                md.append(f"  *Qué hacer:* {f.prescription}")
+            md.append("")
         md.append("---")
         md.append("")
         md.append("## 🏆 3. Ranking de Contenido por Intención Comercial")

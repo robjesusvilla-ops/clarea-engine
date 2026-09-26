@@ -24,6 +24,11 @@
 - Excelente eficiencia de conversión comercial (0.244% de alcance convertido a mensajes).
 - **Cuello de Botella Principal:** Escalabilidad de alcance para sostener la alta demanda de cotizaciones.
 
+### 🧩 Situaciones Detectadas:
+- 🟢 **Muchos guardados en 'Mantenimiento & Costos'** — La audiencia está investigando y comparando proveedores activamente.  
+  *Dato:* 1.76% del alcance guarda este contenido vs 0.67% en el resto.  
+  *Qué hacer:* Publicar guías de costos, comparativas de materiales y checklists de errores comunes antes de contratar.
+
 ---
 
 ## 🏆 3. Ranking de Contenido por Intención Comercial
@@ -38,10 +43,10 @@
 
 ## ⚡ 4. Recomendaciones Accionables (Semana Siguiente)
 
-1. Duplicar la frecuencia de publicaciones sobre 'Proyectos Terminados' utilizando formato 'photo'.
-2. Sustituir llamados a la acción genéricos ('visita nuestro perfil') por CTAs directos a cotización en WhatsApp/Inbox.
-3. Crear contenidos educativos de dolor (costos, errores comunes, antes vs después) para filtrar prospectos calificados.
-4. Medir el retorno semanal por número de cotizaciones generadas en lugar de likes acumulados.
+1. Publicar guías de costos, comparativas de materiales y checklists de errores comunes antes de contratar.
+2. Duplicar la frecuencia de publicaciones sobre 'Proyectos Terminados' utilizando formato 'photo'.
+3. Sustituir llamados a la acción genéricos ('visita nuestro perfil') por CTAs directos a cotización en WhatsApp/Inbox.
+4. Crear contenidos educativos de dolor (costos, errores comunes, antes vs después) para filtrar prospectos calificados.
 
 ---
 
