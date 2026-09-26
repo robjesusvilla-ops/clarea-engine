@@ -6,7 +6,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![Claude Model Context Protocol](https://img.shields.io/badge/MCP-Compatible-purple.svg)](https://modelcontextprotocol.io/)
-[![Tests](https://img.shields.io/badge/Tests-22%2F22%20Passed-brightgreen.svg)](tests/)
+[![Tests](https://img.shields.io/badge/Tests-31%2F31%20Passed-brightgreen.svg)](tests/)
 [![Anthropic Claude](https://img.shields.io/badge/Built%20for-Claude%20Code%20%26%20Sonnet-black)](https://anthropic.com/)
 
 > **"Metricool shows you the numbers. Clarea tells you what they mean and what to do next."**

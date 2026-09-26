@@ -20,6 +20,7 @@ class PostMetric(BaseModel):
 class PeriodSummary(BaseModel):
     brand_name: str
     platform: str = "Facebook"
+    industry: Optional[str] = Field(default=None, description="Rubro (piscinas, restaurante, belleza...). Si falta, se detecta.")
     period_label: str
     total_reach: int
     reach_growth_pct: float
@@ -30,6 +31,12 @@ class PeriodSummary(BaseModel):
     new_followers: int
     posts_count: int
     posts: List[PostMetric] = []
+
+class ContentIdea(BaseModel):
+    """A ready-to-use hook or CTA plus the lesson behind it."""
+    text: str
+    type_name: str
+    why_it_works: str
 
 class RuleFinding(BaseModel):
     rule_id: str
@@ -50,3 +57,6 @@ class DiagnosticInsight(BaseModel):
     suggested_hooks: List[str]
     suggested_ctas: List[str]
     rule_findings: List[RuleFinding] = []
+    industry: str = "general"
+    hook_ideas: List[ContentIdea] = []
+    cta_ideas: List[ContentIdea] = []

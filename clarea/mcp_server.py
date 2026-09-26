@@ -40,10 +40,12 @@ def handle_generate_hooks(arguments: Dict[str, Any]) -> Dict[str, Any]:
     from clarea.generators.hooks import HookGenerator
     topic = arguments.get("topic", "General")
     brand = arguments.get("brand_name", "Brand")
+    industry = HookGenerator.resolve_industry(arguments.get("industry"), [topic, brand])
     return {
         "topic": topic,
-        "hooks": HookGenerator.generate_hooks(topic, brand),
-        "ctas": HookGenerator.generate_ctas(topic)
+        "industry": industry,
+        "hooks": [i.model_dump() for i in HookGenerator.hook_ideas(brand, industry)],
+        "ctas": [i.model_dump() for i in HookGenerator.cta_ideas(brand, industry)]
     }
 
 TOOLS_MANIFEST = [
@@ -68,7 +70,8 @@ TOOLS_MANIFEST = [
             "type": "object",
             "properties": {
                 "topic": {"type": "string", "description": "The specific content category or product topic"},
-                "brand_name": {"type": "string", "description": "The name of the company or brand"}
+                "brand_name": {"type": "string", "description": "The name of the company or brand"},
+                "industry": {"type": "string", "description": "Optional industry: piscinas, restaurante, belleza, inmobiliaria, retail, servicios, general. Detected from topic and brand if omitted."}
             },
             "required": ["topic", "brand_name"]
         }

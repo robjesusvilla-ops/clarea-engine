@@ -24,7 +24,8 @@ def analyze(
     file_path: Path = typer.Argument(..., help="Path to JSON or CSV metrics file"),
     brand: str = typer.Option("Brand", help="Brand name (required if using CSV)"),
     period: str = typer.Option("Current Period", help="Period label (required if using CSV)"),
-    output: Path = typer.Option(None, "--output", "-o", help="Path to save the Markdown report")
+    output: Path = typer.Option(None, "--output", "-o", help="Path to save the Markdown report"),
+    industry: str = typer.Option(None, "--industry", "-i", help="Rubro: piscinas, restaurante, belleza, inmobiliaria, retail, servicios, general (se detecta si no se indica)")
 ):
     """Analyze a marketing dataset and produce an executive decision diagnosis."""
     if not file_path.exists():
@@ -36,11 +37,13 @@ def analyze(
     if file_path.suffix.lower() == ".json":
         summary = MetricParser.from_json_file(file_path)
     elif file_path.suffix.lower() == ".csv":
-        summary = MetricParser.from_csv_file(file_path, brand_name=brand, period_label=period)
+        summary = MetricParser.from_csv_file(file_path, brand_name=brand, period_label=period, industry=industry)
     else:
         console.print(f"[red]Unsupported format:[/red] {file_path.suffix}. Please provide .json or .csv")
         raise typer.Exit(code=1)
 
+    if industry:
+        summary.industry = industry
     analyzer = MetricAnalyzer(summary)
     insight = DiagnosisEngine.generate_local_insight(summary)
 

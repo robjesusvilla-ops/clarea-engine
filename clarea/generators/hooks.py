@@ -1,24 +1,56 @@
-from typing import List
+import re
+from typing import Iterable, List, Optional
+
+from clarea.core.models import ContentIdea
+from clarea.knowledge.hooks_library import CTA_TYPES, HOOK_TYPES, INDUSTRIES
+
+DEFAULT_INDUSTRY = "general"
+
 
 class HookGenerator:
-    """Generates high-converting hooks and CTAs based on content categories."""
+    """Generates hooks and CTAs adapted to the brand's industry."""
 
     @staticmethod
-    def generate_hooks(topic: str, brand_name: str) -> List[str]:
+    def detect_industry(texts: Iterable[str]) -> str:
+        """Picks the industry whose keywords appear most often in the given texts."""
+        blob = " ".join(t for t in texts if t).lower()
+        best, best_hits = DEFAULT_INDUSTRY, 0
+        for key, data in INDUSTRIES.items():
+            hits = sum(len(re.findall(r"\b" + re.escape(k), blob)) for k in data["keywords"])
+            if hits > best_hits:
+                best, best_hits = key, hits
+        return best
+
+    @staticmethod
+    def resolve_industry(industry: Optional[str], texts: Iterable[str] = ()) -> str:
+        if industry and industry.lower() in INDUSTRIES:
+            return industry.lower()
+        return HookGenerator.detect_industry(texts)
+
+    @staticmethod
+    def hook_ideas(brand_name: str, industry: str) -> List[ContentIdea]:
+        hooks = INDUSTRIES[industry]["hooks"]
         return [
-            f"¿Cuánto cambia una propiedad cuando agregas un proyecto de {topic.lower()}?",
-            f"Antes de invertir en {topic.lower()}, mira este detalle que el 90% ignora.",
-            f"3 errores críticos que debes evitar al contratar servicios de {topic.lower()}.",
-            f"Así es como transformamos un espacio vacío en un resultado premium con {brand_name}.",
-            f"Lo que nadie te dice sobre los costos y el mantenimiento real en {topic.lower()}."
+            ContentIdea(text=hooks[t].format(brand=brand_name),
+                        type_name=HOOK_TYPES[t]["nombre"], why_it_works=HOOK_TYPES[t]["por_que"])
+            for t in HOOK_TYPES
         ]
 
     @staticmethod
-    def generate_ctas(topic: str) -> List[str]:
+    def cta_ideas(brand_name: str, industry: str) -> List[ContentIdea]:
+        ctas = INDUSTRIES[industry]["ctas"]
         return [
-            f"Escríbenos '{topic.upper()}' al mensaje directo y te enviamos la guía de cotización.",
-            "Agenda una evaluación técnica sin costo enviándonos una foto de tu espacio.",
-            "Comenta 'INFO' y nuestro equipo te comparte 3 opciones adaptadas a tu presupuesto.",
-            "Solicita una cotización personalizada con tiempo estimado de entrega aquí.",
-            "Escríbenos por WhatsApp para hablar directamente con el especialista a cargo."
+            ContentIdea(text=ctas[t].format(brand=brand_name),
+                        type_name=CTA_TYPES[t]["nombre"], why_it_works=CTA_TYPES[t]["por_que"])
+            for t in CTA_TYPES
         ]
+
+    @staticmethod
+    def generate_hooks(topic: str, brand_name: str, industry: Optional[str] = None) -> List[str]:
+        ind = HookGenerator.resolve_industry(industry, [topic, brand_name])
+        return [i.text for i in HookGenerator.hook_ideas(brand_name, ind)]
+
+    @staticmethod
+    def generate_ctas(topic: str, industry: Optional[str] = None, brand_name: str = "") -> List[str]:
+        ind = HookGenerator.resolve_industry(industry, [topic, brand_name])
+        return [i.text for i in HookGenerator.cta_ideas(brand_name, ind)]

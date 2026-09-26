@@ -84,7 +84,7 @@ class TestClareaEngine(unittest.TestCase):
     def test_hook_generator(self):
         hooks = HookGenerator.generate_hooks("Solar Energy", "TESGA")
         self.assertEqual(len(hooks), 5)
-        self.assertTrue("Solar Energy" in hooks[0] or "solar energy" in hooks[0].lower())
+        self.assertTrue(any("TESGA" in h for h in hooks))
 
 if __name__ == "__main__":
     unittest.main()

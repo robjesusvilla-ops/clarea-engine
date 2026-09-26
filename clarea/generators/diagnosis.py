@@ -51,8 +51,10 @@ class DiagnosisEngine:
         actions += generic_actions[:max(0, 4 - len(actions))]
 
         from clarea.generators.hooks import HookGenerator
-        hooks = HookGenerator.generate_hooks(best_topic, summary.brand_name)
-        ctas = HookGenerator.generate_ctas(best_topic)
+        texts = [summary.brand_name] + [f"{p.topic} {p.caption_preview or ''}" for p in summary.posts]
+        industry = HookGenerator.resolve_industry(summary.industry, texts)
+        hook_ideas = HookGenerator.hook_ideas(summary.brand_name, industry)
+        cta_ideas = HookGenerator.cta_ideas(summary.brand_name, industry)
 
         return DiagnosticInsight(
             executive_summary=summary_text,
@@ -62,7 +64,10 @@ class DiagnosisEngine:
             best_performing_topic=best_topic,
             primary_growth_bottleneck=bottleneck,
             recommended_actions=actions,
-            suggested_hooks=hooks,
-            suggested_ctas=ctas,
-            rule_findings=rule_findings
+            suggested_hooks=[i.text for i in hook_ideas],
+            suggested_ctas=[i.text for i in cta_ideas],
+            rule_findings=rule_findings,
+            industry=industry,
+            hook_ideas=hook_ideas,
+            cta_ideas=cta_ideas
         )
