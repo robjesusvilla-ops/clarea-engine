@@ -1,6 +1,7 @@
 from typing import Dict, Any, List
 from clarea.core.models import PeriodSummary, DiagnosticInsight
 from clarea.core.analyzer import MetricAnalyzer
+from clarea.core.rules import evaluate_rules
 
 class DiagnosisEngine:
     """Generates the signature 'Interpretado por Clarea' business decision breakdown."""
@@ -37,16 +38,23 @@ class DiagnosisEngine:
             f"Para el siguiente ciclo, se requiere priorizar ganchos orientados a deseo y llamados a la acción de fricción cero."
         )
 
-        actions = [
+        rule_findings = evaluate_rules(summary)
+
+        generic_actions = [
             f"Duplicar la frecuencia de publicaciones sobre '{best_topic}' utilizando formato '{best_format}'.",
             "Sustituir llamados a la acción genéricos ('visita nuestro perfil') por CTAs directos a cotización en WhatsApp/Inbox.",
             "Crear contenidos educativos de dolor (costos, errores comunes, antes vs después) para filtrar prospectos calificados.",
             "Medir el retorno semanal por número de cotizaciones generadas en lugar de likes acumulados."
         ]
+        # Rule prescriptions come first; generic actions fill the gaps.
+        actions = [f.prescription for f in rule_findings]
+        actions += generic_actions[:max(0, 4 - len(actions))]
 
         from clarea.generators.hooks import HookGenerator
-        hooks = HookGenerator.generate_hooks(best_topic, summary.brand_name)
-        ctas = HookGenerator.generate_ctas(best_topic)
+        texts = [summary.brand_name] + [f"{p.topic} {p.caption_preview or ''}" for p in summary.posts]
+        industry = HookGenerator.resolve_industry(summary.industry, texts)
+        hook_ideas = HookGenerator.hook_ideas(summary.brand_name, industry)
+        cta_ideas = HookGenerator.cta_ideas(summary.brand_name, industry)
 
         return DiagnosticInsight(
             executive_summary=summary_text,
@@ -56,6 +64,10 @@ class DiagnosisEngine:
             best_performing_topic=best_topic,
             primary_growth_bottleneck=bottleneck,
             recommended_actions=actions,
-            suggested_hooks=hooks,
-            suggested_ctas=ctas
+            suggested_hooks=[i.text for i in hook_ideas],
+            suggested_ctas=[i.text for i in cta_ideas],
+            rule_findings=rule_findings,
+            industry=industry,
+            hook_ideas=hook_ideas,
+            cta_ideas=cta_ideas
         )

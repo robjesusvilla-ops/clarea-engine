@@ -81,3 +81,17 @@ class MetricAnalyzer:
             })
         ranked.sort(key=lambda x: x["engagement_rate"], reverse=True)
         return ranked
+
+    def rank_posts(self) -> List[Dict[str, Any]]:
+        """Ranks individual posts by a 0-100 Clarea score: 70% conversion to messages, 30% engagement."""
+        rows = []
+        for p in self.summary.posts:
+            conv = (p.messages_inquired / p.reach) * 100 if p.reach else 0.0
+            eng = (p.interactions / p.reach) * 100 if p.reach else 0.0
+            rows.append({"post": p, "conversion_rate": round(conv, 3), "engagement_rate": round(eng, 2)})
+        max_conv = max((r["conversion_rate"] for r in rows), default=0) or 1
+        max_eng = max((r["engagement_rate"] for r in rows), default=0) or 1
+        for r in rows:
+            r["score"] = round(70 * r["conversion_rate"] / max_conv + 30 * r["engagement_rate"] / max_eng)
+        rows.sort(key=lambda r: r["score"], reverse=True)
+        return rows

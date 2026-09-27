@@ -7,6 +7,7 @@ name = "clarea-engine"
 version = "0.1.0"
 description = "Open-source Decision Intelligence & Marketing Analytics Engine for Claude & Multi-Agent Systems"
 readme = "README.md"
+requires-python = ">=3.10"
 authors = [
   { name = "Robert Villa", email = "robjesusvilla@gmail.com" }
 ]

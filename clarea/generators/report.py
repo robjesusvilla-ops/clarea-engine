@@ -1,6 +1,8 @@
 from typing import Optional
 from clarea.core.models import PeriodSummary, DiagnosticInsight
 from clarea.core.analyzer import MetricAnalyzer
+from clarea.generators.manager_view import ManagerViewGenerator
+from clarea.knowledge.hooks_library import CTA_DEFINITION, HOOK_DEFINITION, INDUSTRIES
 
 class ReportGenerator:
     """Compiles structured Markdown and Executive B2B reports for agencies and managers."""
@@ -15,6 +17,10 @@ class ReportGenerator:
         md = []
         md.append(f"# 📊 Reporte de Inteligencia de Decisiones: {summary.brand_name}")
         md.append(f"**Plataforma:** {summary.platform} | **Periodo Analizado:** {summary.period_label}")
+        md.append("")
+        md.append("---")
+        md.append("")
+        md.append(ManagerViewGenerator.to_markdown(ManagerViewGenerator.generate(summary, insight)))
         md.append("")
         md.append("---")
         md.append("")
@@ -38,6 +44,14 @@ class ReportGenerator:
             md.append(f"- {f}")
         md.append(f"- **Cuello de Botella Principal:** {insight.primary_growth_bottleneck}")
         md.append("")
+        if insight.rule_findings:
+            icons = {"critico": "🔴", "alerta": "🟡", "oportunidad": "🟢"}
+            md.append("### 🧩 Situaciones Detectadas:")
+            for f in insight.rule_findings:
+                md.append(f"- {icons.get(f.severity, '•')} **{f.title}** — {f.diagnosis}  ")
+                md.append(f"  *Dato:* {f.evidence}  ")
+                md.append(f"  *Qué hacer:* {f.prescription}")
+            md.append("")
         md.append("---")
         md.append("")
         md.append("## 🏆 3. Ranking de Contenido por Intención Comercial")
@@ -58,13 +72,21 @@ class ReportGenerator:
         md.append("")
         md.append("## 🎯 5. Banco de Hooks & CTAs de Alta Conversión")
         md.append("")
+        md.append(f"*Adaptados al rubro: **{INDUSTRIES[insight.industry]['nombre']}***")
+        md.append("")
         md.append("### 🪝 Ganchos (Hooks) Sugeridos:")
-        for h in insight.suggested_hooks:
-            md.append(f"- *\"{h}\"*")
+        md.append(f"> 💡 {HOOK_DEFINITION}")
+        md.append("")
+        for h in insight.hook_ideas:
+            md.append(f"- **{h.type_name}:** *\"{h.text}\"*  ")
+            md.append(f"  ↳ Por qué funciona: {h.why_it_works}")
         md.append("")
         md.append("### 📣 Llamados a la Acción (CTAs) Sugeridos:")
-        for c in insight.suggested_ctas:
-            md.append(f"- **{c}**")
+        md.append(f"> 💡 {CTA_DEFINITION}")
+        md.append("")
+        for c in insight.cta_ideas:
+            md.append(f"- **{c.type_name}:** {c.text}  ")
+            md.append(f"  ↳ Por qué funciona: {c.why_it_works}")
         md.append("")
         md.append("---")
         md.append("*Generado automáticamente por [Clarea Engine](https://github.com/robjesusvilla-ops/clarea-engine) — De Métricas a Decisiones.*")

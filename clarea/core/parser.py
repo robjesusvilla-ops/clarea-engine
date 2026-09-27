@@ -1,6 +1,6 @@
 import json
 import csv
-from typing import Dict, Any, Union
+from typing import Dict, Any, Optional, Union
 from pathlib import Path
 from clarea.core.models import PeriodSummary, PostMetric
 
@@ -18,7 +18,7 @@ class MetricParser:
         return PeriodSummary(**data)
 
     @staticmethod
-    def from_csv_file(file_path: Union[str, Path], brand_name: str, period_label: str) -> PeriodSummary:
+    def from_csv_file(file_path: Union[str, Path], brand_name: str, period_label: str, industry: Optional[str] = None) -> PeriodSummary:
         posts = []
         total_reach = 0
         total_interactions = 0
@@ -56,6 +56,7 @@ class MetricParser:
         return PeriodSummary(
             brand_name=brand_name,
             platform="Facebook",
+            industry=industry,
             period_label=period_label,
             total_reach=total_reach,
             reach_growth_pct=0.0,
