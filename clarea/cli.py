@@ -14,6 +14,7 @@ from clarea.core.parser import MetricParser
 from clarea.core.analyzer import MetricAnalyzer
 from clarea.generators.diagnosis import DiagnosisEngine
 from clarea.generators.report import ReportGenerator
+from clarea.generators.html_dashboard import HtmlDashboard
 from clarea.generators.manager_view import ManagerViewGenerator, STATUS_LABELS
 
 app = typer.Typer(help="Clarea Engine CLI - Transform raw marketing metrics into strategic business decisions.")
@@ -25,6 +26,7 @@ def analyze(
     brand: str = typer.Option("Brand", help="Brand name (required if using CSV)"),
     period: str = typer.Option("Current Period", help="Period label (required if using CSV)"),
     output: Path = typer.Option(None, "--output", "-o", help="Path to save the Markdown report"),
+    html: Path = typer.Option(None, "--html", help="Path to save the interactive HTML dashboard"),
     industry: str = typer.Option(None, "--industry", "-i", help="Rubro: piscinas, restaurante, belleza, inmobiliaria, retail, servicios, general (se detecta si no se indica)")
 ):
     """Analyze a marketing dataset and produce an executive decision diagnosis."""
@@ -80,6 +82,11 @@ def analyze(
         title="🧠 Strategic Insights",
         border_style="cyan"
     ))
+
+    if html:
+        with open(html, "w", encoding="utf-8") as f:
+            f.write(HtmlDashboard.render(summary, insight))
+        console.print(f"[bold green]✓[/bold green] HTML dashboard saved to [cyan]{html}[/cyan]")
 
     # 3. Save or Print Report
     report_md = ReportGenerator.to_markdown(summary, insight)

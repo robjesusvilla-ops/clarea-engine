@@ -6,7 +6,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![Claude Model Context Protocol](https://img.shields.io/badge/MCP-Compatible-purple.svg)](https://modelcontextprotocol.io/)
-[![Tests](https://img.shields.io/badge/Tests-31%2F31%20Passed-brightgreen.svg)](tests/)
+[![Tests](https://img.shields.io/badge/Tests-36%2F36%20Passed-brightgreen.svg)](tests/)
 [![Anthropic Claude](https://img.shields.io/badge/Built%20for-Claude%20Code%20%26%20Sonnet-black)](https://anthropic.com/)
 
 > **"Metricool shows you the numbers. Clarea tells you what they mean and what to do next."**
@@ -58,7 +58,7 @@ pip install -e .          # add ".[mcp]" for the MCP server, ".[dev]" for tests
 ### 2. Run CLI Analysis
 ```bash
 # Analyze a dataset and output the report
-clarea examples/sample_facebook_metrics.json --output executive_report.md
+clarea examples/sample_facebook_metrics.json --output executive_report.md --html dashboard.html
 ```
 
 ### 3. Native Model Context Protocol (MCP) Setup for Claude
