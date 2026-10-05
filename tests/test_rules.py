@@ -94,6 +94,27 @@ class TestRules(unittest.TestCase):
         ])
         self.assertIn("R6", fired(s))
 
+    def test_r6_ignores_words_that_only_contain_sales_terms(self):
+        s = summary([
+            post("a", "Obras", 1000, likes=80, messages=5),
+            post("b", "Diseño", 1000, likes=10, messages=5, caption="Precioso diseño con ventana panorámica"),
+        ])
+        self.assertNotIn("R6", fired(s))
+
+    def test_r6_matches_plurals(self):
+        s = summary([
+            post("a", "Obras", 1000, likes=80, messages=5),
+            post("b", "Temporada", 1000, likes=10, messages=5, caption="Grandes ofertas de verano"),
+        ])
+        self.assertIn("R6", fired(s))
+
+    def test_r6_matches_word_stems(self):
+        s = summary([
+            post("a", "Obras", 1000, likes=80, messages=5),
+            post("b", "Promoción de invierno", 1000, likes=10, messages=5),
+        ])
+        self.assertIn("R6", fired(s))
+
     def test_findings_sorted_by_severity(self):
         s = summary([post("a", "A", 20000, likes=400, comments=2, messages=5)],
                     new_followers=300, messages_growth_pct=0.0)

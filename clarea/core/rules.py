@@ -5,6 +5,7 @@ una prescripción, siguiendo las 6 reglas maestras del brief de producto.
 Los umbrales son valores iniciales razonables y viven en `RuleThresholds`
 para poder ajustarlos con datos reales.
 """
+import re
 from dataclasses import dataclass
 from typing import Callable, List, Optional
 
@@ -12,10 +13,11 @@ from clarea.core.models import PeriodSummary, PostMetric, RuleFinding
 
 SEVERITY_ORDER = {"critico": 0, "alerta": 1, "oportunidad": 2}
 
-SALES_KEYWORDS = (
-    "oferta", "promo", "descuento", "precio", "compra", "cómpra", "venta",
-    "rebaja", "liquidación", "liquidacion", "2x1", "sale",
-)
+# Stems match at the start of a word ('promo' -> 'promoción'); exact words
+# also allow plurals but nothing longer ('venta' never matches 'ventana',
+# 'precio' never matches 'precioso').
+SALES_STEMS = ("oferta", "promo", "descuent", "rebaja", "liquidaci", "2x1", "cómpra", "compralo", "aprovecha")
+SALES_WORDS = ("venta", "precio", "compra")
 
 
 @dataclass
@@ -46,8 +48,10 @@ def _rate(part: int, whole: int) -> float:
 
 
 def _is_sales_post(post: PostMetric) -> bool:
+    # Whole-word match: 'venta' must not match 'ventana'.
     text = f"{post.topic} {post.caption_preview or ''}".lower()
-    return any(k in text for k in SALES_KEYWORDS)
+    return (any(re.search(r"\b" + re.escape(k), text) for k in SALES_STEMS)
+            or any(re.search(r"\b" + re.escape(k) + r"(s|es)?\b", text) for k in SALES_WORDS))
 
 
 def _topics(summary: PeriodSummary) -> dict:
