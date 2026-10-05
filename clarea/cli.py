@@ -94,5 +94,30 @@ def analyze(
         console.print(Markdown(report_md))
 
 
+@app.command()
+def fetch(
+    since: str = typer.Option(..., help="Fecha inicial, AAAA-MM-DD"),
+    until: str = typer.Option(..., help="Fecha final, AAAA-MM-DD"),
+    period: str = typer.Option(..., "--period", "-p", help="Nombre del periodo, ej. 'Mayo 2026'"),
+    output: Path = typer.Option(..., "--output", "-o", help="Archivo .json donde guardar las métricas"),
+    page_id: Optional[str] = typer.Option(None, "--page-id", help="ID de la página (o variable META_PAGE_ID)"),
+    brand: Optional[str] = typer.Option(None, "--brand", "-b", help="Nombre de la marca (por defecto, el de la página)"),
+    industry: Optional[str] = typer.Option(None, "--industry", "-i", help="Rubro del negocio"),
+):
+    """Descarga las métricas de una página de Facebook con la API de Meta (solo lectura).
+
+    Necesita el token de página en la variable de entorno META_PAGE_TOKEN.
+    """
+    from clarea.connectors.meta_graph import MetaGraphClient, MetaGraphError
+    try:
+        summary = MetaGraphClient().fetch_period(page_id, since, until, period, brand, industry)
+    except MetaGraphError as e:
+        console.print(f"[red]Error:[/red] {e}")
+        raise typer.Exit(code=1)
+    output.write_text(summary.model_dump_json(indent=2), encoding="utf-8")
+    console.print(f"[bold green]✓[/bold green] {summary.posts_count} publicaciones de [cyan]{summary.brand_name}[/cyan] "
+                  f"guardadas en [cyan]{output}[/cyan]. Analízalas con: clarea analyze {output}")
+
+
 if __name__ == "__main__":
     app()
