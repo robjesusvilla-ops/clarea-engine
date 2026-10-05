@@ -21,6 +21,12 @@ SEVERITY = {
 }
 FORMAT_LABELS = {"photo": "Foto", "video": "Video", "reel": "Reel", "carousel": "Carrusel", "text": "Texto"}
 
+FONTS = (
+    '<link rel="preconnect" href="https://fonts.googleapis.com">'
+    '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
+    '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=Inter:wght@400;500;600&display=swap">'
+)
+
 CSS = """
 :root{
   color-scheme:dark;
@@ -197,7 +203,9 @@ def _library(brand: str) -> dict:
 class HtmlDashboard:
 
     @staticmethod
-    def render(summary: PeriodSummary, insight: DiagnosticInsight, full_document: bool = True) -> str:
+    def render(summary: PeriodSummary, insight: DiagnosticInsight, full_document: bool = True,
+               nav_html: str = "") -> str:
+        """nav_html is trusted markup placed above the header (used by the web app)."""
         e = escape
         analyzer = MetricAnalyzer(summary)
         view = ManagerViewGenerator.generate(summary, insight)
@@ -291,6 +299,7 @@ class HtmlDashboard:
 
         body = f"""
 <div class="wrap">
+  {nav_html}
   <header>
     <div class="brand"><div class="mark">C</div><div><b>CLAREA</b><div class="tag">De métricas a decisiones</div></div></div>
     <div class="tags"><span class="tag chip">[ {e(summary.brand_name.upper())} ]</span><span class="tag chip">[ {e(period_tag)} ]</span></div>
@@ -363,10 +372,7 @@ class HtmlDashboard:
 """
         head = (
             f"<title>Clarea · {e(summary.brand_name)}</title>"
-            '<link rel="preconnect" href="https://fonts.googleapis.com">'
-            '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
-            '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=Inter:wght@400;500;600&display=swap">'
-            f"<style>{CSS}</style>"
+            f"{FONTS}<style>{CSS}</style>"
         )
         if not full_document:
             return head + body
