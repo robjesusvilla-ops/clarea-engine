@@ -31,6 +31,9 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+ai = [
+    "anthropic>=1.0.0"
+]
 mcp = [
     "mcp>=1.0.0"
 ]

@@ -320,7 +320,7 @@ class HtmlDashboard:
 
   <section class="cols">
     <div class="card" style="display:grid;gap:16px;align-content:start">
-      <div class="section-head"><h2>Interpretado por Clarea</h2><span class="tag">Diagnóstico</span></div>
+      <div class="section-head"><h2>Interpretado por Clarea</h2><span class="tag">{"Diagnóstico · redactado con Claude" if insight.ai_generated else "Diagnóstico"}</span></div>
       <p class="summary">{e(insight.executive_summary)}</p>
       <ul class="clean">{findings_list}</ul>
     </div>

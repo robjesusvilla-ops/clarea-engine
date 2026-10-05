@@ -36,6 +36,8 @@ class ReportGenerator:
         md.append("---")
         md.append("")
         md.append("## 🧠 2. Diagnóstico Estratégico (Interpretado por Clarea)")
+        if insight.ai_generated:
+            md.append("*Redactado con Claude a partir del motor de reglas de Clarea.*")
         md.append("")
         md.append(f"> **Resumen Ejecutivo:**  \n> {insight.executive_summary}")
         md.append("")

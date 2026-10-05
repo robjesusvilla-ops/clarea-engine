@@ -49,12 +49,15 @@ def analyze(
     industry: Optional[str] = typer.Option(None, "--industry", "-i", help="Rubro: piscinas, restaurante, belleza, inmobiliaria, retail, servicios, general (se detecta si no se indica)"),
     output: Optional[Path] = typer.Option(None, "--output", "-o", help="Guardar el reporte en Markdown"),
     html: Optional[Path] = typer.Option(None, "--html", help="Guardar el dashboard interactivo en HTML"),
+    ai: bool = typer.Option(False, "--ai", help="Que Claude redacte el diagnóstico y hooks a medida (necesita ANTHROPIC_API_KEY)"),
 ):
     """Analiza un archivo de métricas y entrega el diagnóstico de Clarea."""
     console.print(Panel(f"[bold cyan]Clarea Engine v{__version__}[/bold cyan] · Analizando [yellow]{file_path.name}[/yellow]", expand=False))
     summary = _load(file_path, brand, period, industry, new_followers)
     prev = _load(previous, brand, "Periodo anterior", industry) if previous else None
-    result = run_analysis(summary, prev)
+    result = run_analysis(summary, prev, use_ai=ai)
+    if ai and result.ai_error:
+        console.print(f"[yellow]Aviso:[/yellow] se usó el diagnóstico local. {result.ai_error}")
     summary, insight, view = result.summary, result.insight, result.manager_view
     analyzer = MetricAnalyzer(summary)
 
@@ -80,7 +83,7 @@ def analyze(
 
     console.print(Panel(
         f"{insight.executive_summary}\n\n[bold yellow]Cuello de botella:[/bold yellow] {insight.primary_growth_bottleneck}",
-        title="🧠 Interpretado por Clarea", border_style="cyan",
+        title="🧠 Interpretado por Clarea" + (" · con Claude" if insight.ai_generated else ""), border_style="cyan",
     ))
 
     report_md = ReportGenerator.to_markdown(summary, insight)

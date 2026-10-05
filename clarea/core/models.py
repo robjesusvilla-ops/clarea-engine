@@ -73,3 +73,4 @@ class DiagnosticInsight(BaseModel):
     hook_ideas: List[ContentIdea] = []
     cta_ideas: List[ContentIdea] = []
     attribution: List[AttributionItem] = []
+    ai_generated: bool = False

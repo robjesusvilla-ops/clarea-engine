@@ -16,11 +16,17 @@ class AnalysisResult:
     summary: PeriodSummary
     insight: DiagnosticInsight
     manager_view: ManagerView
+    ai_error: Optional[str] = None
 
 
-def analyze(summary: PeriodSummary, previous: Optional[PeriodSummary] = None) -> AnalysisResult:
+def analyze(summary: PeriodSummary, previous: Optional[PeriodSummary] = None,
+            use_ai: bool = False, ai_client=None) -> AnalysisResult:
     if previous is not None:
         from clarea.core.parser import MetricParser
         MetricParser.apply_previous_period(summary, previous)
     insight = DiagnosisEngine.generate_local_insight(summary)
-    return AnalysisResult(summary, insight, ManagerViewGenerator.generate(summary, insight))
+    ai_error = None
+    if use_ai:
+        from clarea.ai.claude_diagnosis import enrich_insight
+        insight, ai_error = enrich_insight(summary, insight, ai_client)
+    return AnalysisResult(summary, insight, ManagerViewGenerator.generate(summary, insight), ai_error)
