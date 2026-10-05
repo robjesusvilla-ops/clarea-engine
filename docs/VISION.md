@@ -52,7 +52,7 @@ hacer y cómo hacerlo**, no solo saber cómo le fue.
 |------|----------|---------|
 | Primera red | Facebook | Es más sencilla para probar; Instagram es más compleja. |
 | Siguiente red | Instagram | Después de validar con Facebook. |
-| Datos | API oficial de Meta (Graph API) | Pendiente revisar cómo conectarla de forma segura. |
+| Datos | CSV de Meta Business Suite y API oficial de Meta, solo lectura | Ver docs/CONECTAR_META.md. |
 | Ritmo | Proyecto personal, paso a paso | Se trabaja en los tiempos disponibles. |
 
 ## Equipo
