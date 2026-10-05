@@ -1,69 +1,122 @@
 <div align="center">
 
-# ⚡ Clarea Engine
-### Open-Source Decision Intelligence & Marketing Analytics Engine for Claude
+# ⚡ Clarea
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+### De métricas a decisiones
+
+[![CI](https://github.com/robjesusvilla-ops/clarea-engine/actions/workflows/ci.yml/badge.svg)](https://github.com/robjesusvilla-ops/clarea-engine/actions/workflows/ci.yml)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
-[![Claude Model Context Protocol](https://img.shields.io/badge/MCP-Compatible-purple.svg)](https://modelcontextprotocol.io/)
-[![Tests](https://img.shields.io/badge/Tests-6%2F6%20Passed-brightgreen.svg)](tests/)
-[![Anthropic Claude](https://img.shields.io/badge/Built%20for-Claude%20Code%20%26%20Sonnet-black)](https://anthropic.com/)
+[![MCP](https://img.shields.io/badge/MCP-Compatible-purple.svg)](https://modelcontextprotocol.io/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-> **"Metricool shows you the numbers. Clarea tells you what they mean and what to do next."**
+> **Metricool te muestra los datos. Clarea te dice qué significan y qué hacer después.**
 
 </div>
 
----
+Clarea analiza las métricas de redes sociales de un negocio y entrega lo que un dueño o una agencia necesita para decidir: un semáforo de salud, qué funcionó y qué no, qué hacer la próxima semana y los hooks y CTAs para hacerlo. Separa la atención (alcance, likes) de la intención comercial (mensajes, cotizaciones), porque lo que importa es lo segundo.
 
-## 💡 What is Clarea Engine?
+## Qué hace
 
-Most social media and marketing analytics tools (Meta Business Suite, Metricool, Hootsuite, Sprout Social) suffer from the same fundamental limitation: **they display raw numbers without strategic context**. 
+| Módulo | Qué entrega |
+|---|---|
+| **Vista Gerente** | Semáforo 🟢🟡🔴, logro principal, cuello de botella y próxima decisión, en una pantalla |
+| **KPIs y embudo** | Alcance, interacciones, mensajes y seguidores con su variación, y el embudo Atención → Interés → Intención comercial |
+| **Interpretado por Clarea** | Diagnóstico en lenguaje de negocio (local, o redactado con Claude) |
+| **Motor de reglas** | Las 6 reglas expertas: alto alcance y pocos mensajes, likes sin conversación, tema que supera el promedio, muchos guardados, seguidores sin clientes, caída en posts de venta |
+| **Ranking de publicaciones** | Score Clarea de 0 a 100: 70 % conversión a mensajes, 30 % engagement |
+| **Qué funcionó y qué falló** | Cada formato y tema comparado contra el promedio de la cuenta |
+| **Hooks y CTAs** | Por rubro, con su explicación de por qué funcionan; con Claude, también a medida |
+| **Reportes** | Dashboard HTML, reporte Markdown, correo con adjuntos y mensaje listo para WhatsApp |
 
-Marketers, agencies, and business managers are overwhelmed with graphs of reach, likes, and impressions, but cannot answer critical questions:
-- *Why did engagement drop despite higher ad spend?*
-- *Which content generated actual sales inquiries versus hollow vanity metrics?*
-- *What specific hook and call-to-action should we deploy next week?*
+## Instalación
 
-**Clarea Engine** is an open-source framework and native **Model Context Protocol (MCP) Server** designed to bridge this gap. Powered by **Claude 3.5 Sonnet / Claude Code**, it transforms raw engagement and conversion metrics into structured, deterministic business decisions.
-
----
-
-## 🏗️ Architecture
-
-```mermaid
-graph TD
-    A["Raw Marketing Data (JSON, CSV, Meta Graph API)"] --> B["MetricParser (Data Normalization)"]
-    B --> C["MetricAnalyzer (Statistical & Conversion Engine)"]
-    C --> D1["Vanity vs Business Intent Ratio"]
-    C --> D2["Content Topic & Format Ranking"]
-    C --> D3["Conversion Bottleneck Detection"]
-    
-    D1 & D2 & D3 --> E["Claude Prompt Orchestrator / MCP Server"]
-    E --> F1["'Interpretado por Clarea' Executive Diagnosis"]
-    E --> F2["Direct-Response Hooks & CTA Generator"]
-    E --> F3["Automated B2B Markdown / PDF Report"]
-```
-
----
-
-## 🚀 Quickstart
-
-### 1. Installation
 ```bash
 git clone https://github.com/robjesusvilla-ops/clarea-engine.git
 cd clarea-engine
-pip install -r requirements.txt
+pip install -e ".[web,ai]"      # o solo "pip install -e ." para el motor
 ```
 
-### 2. Run CLI Analysis
+## Uso rápido
+
 ```bash
-# Analyze a dataset and output the report
-python clarea/cli.py analyze examples/sample_facebook_metrics.json --output executive_report.md
+# Analizar el ejemplo incluido y generar el dashboard
+clarea analyze examples/sample_facebook_metrics.json --html dashboard.html -o reporte.md
+
+# Analizar un CSV exportado de Meta Business Suite, comparando con el mes anterior
+clarea analyze mayo.csv -b "Qhatai Piscinas" -p "Mayo 2026" --previous abril.csv --new-followers 210 --html dashboard.html
 ```
 
-### 3. Native Model Context Protocol (MCP) Setup for Claude
+**Datos que acepta:**
+- El CSV que exporta **Meta Business Suite** (Estadísticas → Contenido → Exportar). Reconoce columnas en español o inglés, separadas por coma o punto y coma.
+- La [plantilla de Clarea](examples/plantilla_metricas_mayo.csv), con una columna `tema` opcional.
+- El JSON que genera `clarea fetch` desde la API de Meta.
 
-Add Clarea Engine to your `claude_desktop_config.json` or `.claude/config.json`:
+Si el archivo no trae el tema de cada post, Clarea lo deduce del texto: resultados, educativo, promoción, diseño, detrás de escena o institucional.
+
+## App web
+
+```bash
+clarea web          # abre http://127.0.0.1:8000
+```
+
+Crea clientes, sube el CSV de cada mes y mira el dashboard de cada periodo, comparado contra el mes anterior. Desde ahí descargas el reporte, lo envías por correo o lo compartes por WhatsApp.
+
+Antes de abrirla a otros equipos o a internet, ponle contraseña:
+
+```bash
+export CLAREA_WEB_USER=robert CLAREA_WEB_PASSWORD="una-clave-larga"
+clarea web --host 0.0.0.0
+```
+
+Los datos de los clientes se guardan en la carpeta `clarea_data/` (o en `CLAREA_DATA_DIR`), que no se sube a GitHub.
+
+## Varios clientes desde la terminal
+
+```bash
+clarea client add "Qhatai Piscinas" -i piscinas --email gerencia@qhatai.pe --whatsapp "+51 999 888 777"
+clarea client import qhatai-piscinas abril.csv -k 2026-04 -l "Abril 2026"
+clarea client import qhatai-piscinas mayo.csv  -k 2026-05 -l "Mayo 2026" --new-followers 210
+clarea client report qhatai-piscinas --html dashboard.html
+clarea client send qhatai-piscinas
+clarea client list
+```
+
+## Envío de reportes
+
+**Correo.** Configura una cuenta SMTP con variables de entorno. Con Gmail usa una [contraseña de aplicación](https://support.google.com/accounts/answer/185833), no tu contraseña normal.
+
+```bash
+export CLAREA_SMTP_HOST=smtp.gmail.com CLAREA_SMTP_PORT=587
+export CLAREA_SMTP_USER=tu-correo@gmail.com CLAREA_SMTP_PASSWORD="contraseña-de-aplicación"
+```
+
+Sin `CLAREA_SMTP_HOST`, Clarea no envía nada: guarda el correo en `clarea_data/outbox/` para que lo revises.
+
+**WhatsApp.** Clarea arma un mensaje corto y un enlace `wa.me` que abre WhatsApp con el texto escrito; tú solo pulsas enviar. El envío totalmente automático necesitaría la API de WhatsApp Business, que no está incluida.
+
+## Conectar con la API de Meta
+
+```bash
+export META_PAGE_TOKEN="..."   # token de página con permisos de solo lectura
+export META_PAGE_ID="..."
+clarea fetch --since 2026-05-01 --until 2026-05-31 -p "Mayo 2026" -o mayo.json
+clarea analyze mayo.json --html dashboard.html
+```
+
+Paso a paso, permisos y límites de la API en [docs/CONECTAR_META.md](docs/CONECTAR_META.md).
+
+## Diagnóstico con Claude (opcional)
+
+```bash
+export ANTHROPIC_API_KEY="..."
+clarea analyze mayo.csv --ai --html dashboard.html
+```
+
+Con `--ai`, Claude redacta el resumen, los hallazgos y las acciones, y agrega 3 hooks a medida a partir de los posts que mejor convirtieron. El motor de reglas sigue mandando: Claude explica y amplía las situaciones detectadas, nunca las contradice. Si no hay clave o la API falla, Clarea usa el diagnóstico local y te avisa.
+
+## Servidor MCP para Claude
+
+Agrega Clarea a la configuración de Claude Desktop o Claude Code:
 
 ```json
 {
@@ -71,73 +124,56 @@ Add Clarea Engine to your `claude_desktop_config.json` or `.claude/config.json`:
     "clarea": {
       "command": "python",
       "args": ["-m", "clarea.mcp_server"],
-      "cwd": "/path/to/clarea-engine"
+      "cwd": "/ruta/a/clarea-engine"
     }
   }
 }
 ```
 
-Once connected, Claude can natively execute tools like `clarea_analyze_metrics` and `clarea_generate_hooks_and_ctas` directly inside chat conversations.
+Claude puede usar `clarea_analyze_metrics` (diagnóstico completo, Vista Gerente, reglas y qué funcionó) y `clarea_generate_hooks_and_ctas` (por rubro).
 
----
+## Ajustar el cerebro de Clarea
 
-## 📊 Sample Output (Executive Diagnosis)
+Aquí entra la experiencia en redes, sin tocar el resto del código:
 
-```markdown
-## 🧠 Strategic Diagnosis: Qhatai Piscinas (Facebook - May 2026)
+- **Umbrales de las 6 reglas:** `RuleThresholds` en [`clarea/core/rules.py`](clarea/core/rules.py). Por ejemplo, desde qué porcentaje de mensajes sobre el alcance se consideran "pocos".
+- **Hooks y CTAs por rubro:** [`clarea/knowledge/hooks_library.py`](clarea/knowledge/hooks_library.py). Para agregar un rubro, copia uno existente y cambia sus textos y palabras clave.
+- **Ángulos de contenido:** las palabras clave que clasifican cada post están en [`clarea/core/classifier.py`](clarea/core/classifier.py).
 
-> **Executive Summary:**  
-> Qhatai is capturing strong visibility in Facebook (+18.4% reach growth), 
-> driven primarily by 'Completed Projects' photo posts. However, the commercial 
-> conversion bottleneck lies in message capture (0.24% conversion rate).
-> Next week's priority: shift from general captions to friction-free quote CTAs.
+## Estructura
 
-### 🔍 Key Findings:
-- Total Reach: 38,450 (+18.4%)
-- Direct Inquiries (Quote Requests): 94 (+28.5%)
-- Vanity-to-Business Ratio: 0.65 (Healthy commercial balance)
-- Top Content Category: 'Completed Projects' (60 inquiries generated across 2 posts)
-
-### ⚡ Recommended Actions:
-1. Double down on 'Completed Projects' photo carousels.
-2. Replace passive CTAs ('visit our profile') with direct WhatsApp/DM quote links.
-3. Deploy educational cost/maintenance posts to pre-qualify high-ticket buyers.
+```
+clarea/
+  core/          modelos, lectura de datos, clasificador, analizador, reglas, qué funcionó
+  generators/    diagnóstico, Vista Gerente, hooks, reporte Markdown, dashboard HTML
+  knowledge/     biblioteca de hooks y CTAs por rubro
+  connectors/    API de Meta (solo lectura)
+  ai/            capa opcional con Claude
+  web/           app web (FastAPI)
+  workspace.py   clientes e historial de periodos
+  delivery.py    correo y WhatsApp
+  pipeline.py    punto único de análisis
+  cli.py         comandos de terminal
+  mcp_server.py  servidor MCP
 ```
 
----
+Para desarrollar: `pip install -e ".[web,ai,dev]"` y `python -m pytest`.
 
-## 🪝 Python SDK Usage
+## Hoja de ruta
 
-```python
-from clarea.core.parser import MetricParser
-from clarea.generators.diagnosis import DiagnosisEngine
-from clarea.generators.report import ReportGenerator
+- [x] Lectura de CSV de Meta y plantilla propia, con comparación contra el periodo anterior
+- [x] Motor con las 6 reglas, Vista Gerente, qué funcionó y qué falló, ranking de posts
+- [x] Hooks y CTAs por rubro, con explicación
+- [x] Dashboard HTML, reporte Markdown, correo y WhatsApp
+- [x] App web multi-cliente
+- [x] Conector de solo lectura con la API de Meta (Facebook)
+- [x] Diagnóstico redactado con Claude
+- [ ] Validación con datos reales de Qhatai y 3 agencias
+- [ ] Instagram (API de Meta)
+- [ ] Roles agencia / cliente y pagos recurrentes
 
-# 1. Parse metrics
-summary = MetricParser.from_json_file("examples/sample_facebook_metrics.json")
+## Licencia
 
-# 2. Generate strategic diagnosis
-insight = DiagnosisEngine.generate_local_insight(summary)
+MIT. Ver [LICENSE](LICENSE).
 
-# 3. Export full Markdown report
-report_md = ReportGenerator.to_markdown(summary, insight)
-print(report_md)
-```
-
----
-
-## 🗺️ Roadmap
-- [x] Core Metric Parser (JSON & CSV).
-- [x] Conversion & Vanity Ratio Statistical Engine.
-- [x] Standard Model Context Protocol (MCP) Server for Claude.
-- [x] Hook & Direct-Response CTA Generator.
-- [ ] Meta Graph API Live Webhook Ingestion.
-- [ ] Multi-platform normalization (Instagram, LinkedIn, TikTok).
-- [ ] Autonomous weekly client report scheduler via email/Slack.
-
----
-
-## 📄 License
-This project is open-source under the **MIT License**. See [LICENSE](LICENSE) for details.
-
-Developed with ❤️ by **Robert Villa** and contributors.
+Desarrollado por **Robert Villa**.

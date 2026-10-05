@@ -3,6 +3,20 @@
 
 ---
 
+## 🚦 Vista Gerente — Qhatai Piscinas (Mayo 2026)
+
+**Estado: 🟡 Alerta** — Caída de engagement en publicaciones de venta directa
+
+| | |
+| :--- | :--- |
+| 🏆 **Logro principal** | Los mensajes de venta crecieron +28.5% (94 en el periodo). |
+| 🚧 **Cuello de botella** | Caída de engagement en publicaciones de venta directa. El público rechaza la venta agresiva sin contexto de valor previo. |
+| 🎯 **Próxima decisión** | Pasar de 'Cómpranos hoy' a contenido de deseo, solución de problemas y prueba de retorno de inversión. |
+
+Alcance: 38,450 (+18.4%) · Mensajes de venta: 94 (+28.5%) · Seguidores nuevos: 210
+
+---
+
 ## 📈 1. Métricas Principales de Rendimiento
 
 | Métrica | Valor Total | Variación vs Anterior | Interpretación Rápida |
@@ -17,12 +31,23 @@
 ## 🧠 2. Diagnóstico Estratégico (Interpretado por Clarea)
 
 > **Resumen Ejecutivo:**  
-> Qhatai Piscinas está capturando atención sólida en Facebook, especialmente cuando publica contenido sobre 'Proyectos Terminados' en formato 'photo'. Sin embargo, el principal desafío estratégico es escalabilidad de alcance para sostener la alta demanda de cotizaciones. Para el siguiente ciclo, se requiere priorizar ganchos orientados a deseo y llamados a la acción de fricción cero.
+> Qhatai Piscinas está capturando atención sólida en Facebook, especialmente cuando publica contenido sobre 'Proyectos Terminados' en formato 'video'. Sin embargo, el principal desafío estratégico es: caída de engagement en publicaciones de venta directa (el público rechaza la venta agresiva sin contexto de valor previo). Para el siguiente ciclo, se requiere priorizar ganchos orientados a deseo y llamados a la acción de fricción cero.
 
 ### 🔍 Hallazgos Clave:
 - El alcance total creció +18.4%, logrando 38,450 personas alcanzadas.
-- Excelente eficiencia de conversión comercial (0.244% de alcance convertido a mensajes).
-- **Cuello de Botella Principal:** Escalabilidad de alcance para sostener la alta demanda de cotizaciones.
+- Conversión comercial de 0.244% del alcance a mensajes.
+- **Cuello de Botella Principal:** Caída de engagement en publicaciones de venta directa (el público rechaza la venta agresiva sin contexto de valor previo).
+
+### 🧩 Situaciones Detectadas:
+- 🟡 **Caída de engagement en publicaciones de venta directa** — El público rechaza la venta agresiva sin contexto de valor previo.  
+  *Dato:* Posts de venta: 2.5% de engagement vs 6.3% en el resto (1 de 8 posts).  
+  *Qué hacer:* Pasar de 'Cómpranos hoy' a contenido de deseo, solución de problemas y prueba de retorno de inversión.
+- 🟢 **'Proyectos Terminados' supera el promedio de la cuenta** — La prueba social y el resultado visible generan credibilidad inmediata.  
+  *Dato:* Convierte 0.33% del alcance en mensajes vs 0.14% del resto del contenido (2.5x).  
+  *Qué hacer:* Duplicar la frecuencia de 'Proyectos Terminados' con estructura 'Antes / Proceso / Entrega final'.
+- 🟢 **Muchos guardados en 'Mantenimiento & Costos'** — La audiencia está investigando y comparando proveedores activamente.  
+  *Dato:* 1.47% del alcance guarda este contenido vs 0.52% en el resto.  
+  *Qué hacer:* Publicar guías de costos, comparativas de materiales y checklists de errores comunes antes de contratar.
 
 ---
 
@@ -31,35 +56,65 @@
 | Categoría / Tema | Posts | Mensajes Generados | Alcance Promedio | Tasa de Conversión |
 | :--- | :--- | :--- | :--- | :--- |
 | **Proyectos Terminados** | 2 | **60** | 9,050 | `0.331%` |
-| **Mantenimiento & Costos** | 1 | **18** | 5,400 | `0.333%` |
-| **Institucional / Saludos** | 1 | **1** | 3,100 | `0.032%` |
+| **Mantenimiento & Costos** | 2 | **24** | 5,100 | `0.235%` |
+| **Promoción** | 1 | **4** | 3,600 | `0.111%` |
+| **Renders / Diseños 3D** | 1 | **3** | 4,200 | `0.071%` |
+| **Institucional / Saludos** | 2 | **1** | 2,850 | `0.018%` |
+
+---
+
+## ⚖️ Qué Funcionó y Qué Falló
+
+### ✅ Funcionó
+- **Proyectos Terminados** (tema) — Convierte 1.5x más que el promedio de la cuenta (0.33% vs 0.22%).
+
+### ❌ Falló
+- **Promoción** (tema) — Convierte 0.5x el promedio (0.11% vs 0.22%): no genera atención ni mensajes. *(1 publicación, dato preliminar)*
+- **Renders / Diseños 3D** (tema) — Convierte 0.3x el promedio (0.07% vs 0.22%): no genera atención ni mensajes. *(1 publicación, dato preliminar)*
+- **Institucional / Saludos** (tema) — Convierte 0.1x el promedio (0.02% vs 0.22%): no genera atención ni mensajes.
 
 ---
 
 ## ⚡ 4. Recomendaciones Accionables (Semana Siguiente)
 
-1. Duplicar la frecuencia de publicaciones sobre 'Proyectos Terminados' utilizando formato 'photo'.
-2. Sustituir llamados a la acción genéricos ('visita nuestro perfil') por CTAs directos a cotización en WhatsApp/Inbox.
-3. Crear contenidos educativos de dolor (costos, errores comunes, antes vs después) para filtrar prospectos calificados.
-4. Medir el retorno semanal por número de cotizaciones generadas en lugar de likes acumulados.
+1. Pasar de 'Cómpranos hoy' a contenido de deseo, solución de problemas y prueba de retorno de inversión.
+2. Duplicar la frecuencia de 'Proyectos Terminados' con estructura 'Antes / Proceso / Entrega final'.
+3. Publicar guías de costos, comparativas de materiales y checklists de errores comunes antes de contratar.
+4. Sustituir llamados a la acción genéricos ('visita nuestro perfil') por CTAs directos a cotización en WhatsApp/Inbox.
 
 ---
 
 ## 🎯 5. Banco de Hooks & CTAs de Alta Conversión
 
+*Adaptados al rubro: **Piscinas y construcción***
+
 ### 🪝 Ganchos (Hooks) Sugeridos:
-- *"¿Cuánto cambia una propiedad cuando agregas un proyecto de proyectos terminados?"*
-- *"Antes de invertir en proyectos terminados, mira este detalle que el 90% ignora."*
-- *"3 errores críticos que debes evitar al contratar servicios de proyectos terminados."*
-- *"Así es como transformamos un espacio vacío en un resultado premium con Qhatai Piscinas."*
-- *"Lo que nadie te dice sobre los costos y el mantenimiento real en proyectos terminados."*
+> 💡 Un hook (gancho) es la primera frase de tu publicación o los primeros 3 segundos de tu video. Su único trabajo es que la persona deje de deslizar y se quede a mirar.
+
+- **Pregunta de deseo:** *"¿Cuánto cambia una casa cuando le agregas una piscina?"*  
+  ↳ Por qué funciona: Hace que la persona se imagine con el resultado; si se lo imagina, sigue leyendo.
+- **Error común:** *"3 errores que encarecen tu piscina antes de poner el primer ladrillo."*  
+  ↳ Por qué funciona: A nadie le gusta equivocarse con su dinero; el miedo a perder atrapa más que la promesa de ganar.
+- **Antes y después:** *"Así era este patio hace 60 días. Así se ve hoy."*  
+  ↳ Por qué funciona: Muestra la transformación real; es prueba social y genera credibilidad inmediata.
+- **Costo real:** *"¿Cuánto cuesta realmente una piscina? Te lo contamos sin letra chica."*  
+  ↳ Por qué funciona: El precio es la duda número uno; hablarlo abiertamente genera confianza y filtra curiosos.
+- **Detrás de escena:** *"Así construye Qhatai Piscinas una piscina, paso a paso."*  
+  ↳ Por qué funciona: Enseñar el proceso humaniza la marca y demuestra que sabes lo que haces.
 
 ### 📣 Llamados a la Acción (CTAs) Sugeridos:
-- **Escríbenos 'PROYECTOS TERMINADOS' al mensaje directo y te enviamos la guía de cotización.**
-- **Agenda una evaluación técnica sin costo enviándonos una foto de tu espacio.**
-- **Comenta 'INFO' y nuestro equipo te comparte 3 opciones adaptadas a tu presupuesto.**
-- **Solicita una cotización personalizada con tiempo estimado de entrega aquí.**
-- **Escríbenos por WhatsApp para hablar directamente con el especialista a cargo.**
+> 💡 Un CTA (llamado a la acción) es la instrucción final que le dice a la persona exactamente qué hacer ahora. Si no le pides nada, no hará nada.
+
+- **Palabra clave por mensaje:** Escríbenos 'PISCINA' por mensaje y te enviamos una cotización referencial.  
+  ↳ Por qué funciona: Fricción cero: escribir una palabra es fácil, y cada mensaje es un cliente potencial medible.
+- **WhatsApp directo:** Escríbenos por WhatsApp y habla directo con el ingeniero a cargo.  
+  ↳ Por qué funciona: Lleva la conversación al canal donde se cierra la venta, sin pasos intermedios.
+- **Agendar:** Agenda una visita técnica sin costo a tu casa.  
+  ↳ Por qué funciona: Convierte el interés en un compromiso con fecha; quien agenda ya está decidido.
+- **Comentar:** Comenta '¿techada o al aire libre?' y te contamos cuál conviene más.  
+  ↳ Por qué funciona: Cada comentario le dice al algoritmo que el contenido vale la pena y le da más alcance.
+- **Recurso gratis:** Pide nuestra guía gratis: 'Todo lo que debes saber antes de construir tu piscina'.  
+  ↳ Por qué funciona: Das valor antes de vender; quien pide la guía ya está investigando y es un cliente calificado.
 
 ---
 *Generado automáticamente por [Clarea Engine](https://github.com/robjesusvilla-ops/clarea-engine) — De Métricas a Decisiones.*

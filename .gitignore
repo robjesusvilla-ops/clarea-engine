@@ -65,3 +65,7 @@ venv.bak/
 *.swo
 .DS_Store
 Thumbs.db
+
+# Clarea client data (real metrics never go to git)
+clarea_data/
+.env

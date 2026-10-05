@@ -1,6 +1,8 @@
 from typing import Optional
 from clarea.core.models import PeriodSummary, DiagnosticInsight
 from clarea.core.analyzer import MetricAnalyzer
+from clarea.generators.manager_view import ManagerViewGenerator
+from clarea.knowledge.hooks_library import CTA_DEFINITION, HOOK_DEFINITION, INDUSTRIES
 
 class ReportGenerator:
     """Compiles structured Markdown and Executive B2B reports for agencies and managers."""
@@ -18,6 +20,10 @@ class ReportGenerator:
         md.append("")
         md.append("---")
         md.append("")
+        md.append(ManagerViewGenerator.to_markdown(ManagerViewGenerator.generate(summary, insight)))
+        md.append("")
+        md.append("---")
+        md.append("")
         md.append("## 📈 1. Métricas Principales de Rendimiento")
         md.append("")
         md.append("| Métrica | Valor Total | Variación vs Anterior | Interpretación Rápida |")
@@ -30,6 +36,8 @@ class ReportGenerator:
         md.append("---")
         md.append("")
         md.append("## 🧠 2. Diagnóstico Estratégico (Interpretado por Clarea)")
+        if insight.ai_generated:
+            md.append("*Redactado con Claude a partir del motor de reglas de Clarea.*")
         md.append("")
         md.append(f"> **Resumen Ejecutivo:**  \n> {insight.executive_summary}")
         md.append("")
@@ -38,6 +46,14 @@ class ReportGenerator:
             md.append(f"- {f}")
         md.append(f"- **Cuello de Botella Principal:** {insight.primary_growth_bottleneck}")
         md.append("")
+        if insight.rule_findings:
+            icons = {"critico": "🔴", "alerta": "🟡", "oportunidad": "🟢"}
+            md.append("### 🧩 Situaciones Detectadas:")
+            for f in insight.rule_findings:
+                md.append(f"- {icons.get(f.severity, '•')} **{f.title}** — {f.diagnosis}  ")
+                md.append(f"  *Dato:* {f.evidence}  ")
+                md.append(f"  *Qué hacer:* {f.prescription}")
+            md.append("")
         md.append("---")
         md.append("")
         md.append("## 🏆 3. Ranking de Contenido por Intención Comercial")
@@ -49,6 +65,21 @@ class ReportGenerator:
         md.append("")
         md.append("---")
         md.append("")
+        worked = [a for a in insight.attribution if a.verdict == "funciono"]
+        failed = [a for a in insight.attribution if a.verdict == "fallo"]
+        if worked or failed:
+            md.append("## ⚖️ Qué Funcionó y Qué Falló")
+            md.append("")
+            for title, group in (("✅ Funcionó", worked), ("❌ Falló", failed)):
+                if not group:
+                    continue
+                md.append(f"### {title}")
+                for a in group:
+                    note = " *(1 publicación, dato preliminar)*" if a.preliminary else ""
+                    md.append(f"- **{a.name}** ({a.dimension}) — {a.reason}{note}")
+                md.append("")
+            md.append("---")
+            md.append("")
         md.append("## ⚡ 4. Recomendaciones Accionables (Semana Siguiente)")
         md.append("")
         for idx, act in enumerate(insight.recommended_actions, 1):
@@ -58,13 +89,21 @@ class ReportGenerator:
         md.append("")
         md.append("## 🎯 5. Banco de Hooks & CTAs de Alta Conversión")
         md.append("")
+        md.append(f"*Adaptados al rubro: **{INDUSTRIES[insight.industry]['nombre']}***")
+        md.append("")
         md.append("### 🪝 Ganchos (Hooks) Sugeridos:")
-        for h in insight.suggested_hooks:
-            md.append(f"- *\"{h}\"*")
+        md.append(f"> 💡 {HOOK_DEFINITION}")
+        md.append("")
+        for h in insight.hook_ideas:
+            md.append(f"- **{h.type_name}:** *\"{h.text}\"*  ")
+            md.append(f"  ↳ Por qué funciona: {h.why_it_works}")
         md.append("")
         md.append("### 📣 Llamados a la Acción (CTAs) Sugeridos:")
-        for c in insight.suggested_ctas:
-            md.append(f"- **{c}**")
+        md.append(f"> 💡 {CTA_DEFINITION}")
+        md.append("")
+        for c in insight.cta_ideas:
+            md.append(f"- **{c.type_name}:** {c.text}  ")
+            md.append(f"  ↳ Por qué funciona: {c.why_it_works}")
         md.append("")
         md.append("---")
         md.append("*Generado automáticamente por [Clarea Engine](https://github.com/robjesusvilla-ops/clarea-engine) — De Métricas a Decisiones.*")

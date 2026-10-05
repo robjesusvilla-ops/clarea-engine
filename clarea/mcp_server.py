@@ -9,6 +9,7 @@ from typing import Dict, Any, List
 from clarea.core.parser import MetricParser
 from clarea.core.analyzer import MetricAnalyzer
 from clarea.generators.diagnosis import DiagnosisEngine
+from clarea.generators.manager_view import ManagerViewGenerator
 from clarea.generators.report import ReportGenerator
 
 def handle_analyze_metrics(arguments: Dict[str, Any]) -> Dict[str, Any]:
@@ -20,6 +21,7 @@ def handle_analyze_metrics(arguments: Dict[str, Any]) -> Dict[str, Any]:
     analyzer = MetricAnalyzer(summary)
     insight = DiagnosisEngine.generate_local_insight(summary)
     markdown_report = ReportGenerator.to_markdown(summary, insight)
+    manager_view = ManagerViewGenerator.generate(summary, insight)
 
     return {
         "brand_name": summary.brand_name,
@@ -29,6 +31,9 @@ def handle_analyze_metrics(arguments: Dict[str, Any]) -> Dict[str, Any]:
         "conversion_rate": analyzer.calculate_message_conversion_rate(),
         "vanity_ratio": analyzer.calculate_vanity_vs_business_ratio(),
         "executive_summary": insight.executive_summary,
+        "manager_view": manager_view.model_dump(),
+        "rule_findings": [f.model_dump() for f in insight.rule_findings],
+        "what_worked_and_failed": [a.model_dump() for a in insight.attribution],
         "markdown_report": markdown_report
     }
 
@@ -36,10 +41,12 @@ def handle_generate_hooks(arguments: Dict[str, Any]) -> Dict[str, Any]:
     from clarea.generators.hooks import HookGenerator
     topic = arguments.get("topic", "General")
     brand = arguments.get("brand_name", "Brand")
+    industry = HookGenerator.resolve_industry(arguments.get("industry"), [topic, brand])
     return {
         "topic": topic,
-        "hooks": HookGenerator.generate_hooks(topic, brand),
-        "ctas": HookGenerator.generate_ctas(topic)
+        "industry": industry,
+        "hooks": [i.model_dump() for i in HookGenerator.hook_ideas(brand, industry)],
+        "ctas": [i.model_dump() for i in HookGenerator.cta_ideas(brand, industry)]
     }
 
 TOOLS_MANIFEST = [
@@ -64,7 +71,8 @@ TOOLS_MANIFEST = [
             "type": "object",
             "properties": {
                 "topic": {"type": "string", "description": "The specific content category or product topic"},
-                "brand_name": {"type": "string", "description": "The name of the company or brand"}
+                "brand_name": {"type": "string", "description": "The name of the company or brand"},
+                "industry": {"type": "string", "description": "Optional industry: piscinas, restaurante, belleza, inmobiliaria, retail, servicios, general. Detected from topic and brand if omitted."}
             },
             "required": ["topic", "brand_name"]
         }
