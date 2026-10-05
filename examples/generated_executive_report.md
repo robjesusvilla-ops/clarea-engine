@@ -31,12 +31,12 @@ Alcance: 38,450 (+18.4%) · Mensajes de venta: 94 (+28.5%) · Seguidores nuevos:
 ## 🧠 2. Diagnóstico Estratégico (Interpretado por Clarea)
 
 > **Resumen Ejecutivo:**  
-> Qhatai Piscinas está capturando atención sólida en Facebook, especialmente cuando publica contenido sobre 'Proyectos Terminados' en formato 'video'. Sin embargo, el principal desafío estratégico es escalabilidad de alcance para sostener la alta demanda de cotizaciones. Para el siguiente ciclo, se requiere priorizar ganchos orientados a deseo y llamados a la acción de fricción cero.
+> Qhatai Piscinas está capturando atención sólida en Facebook, especialmente cuando publica contenido sobre 'Proyectos Terminados' en formato 'video'. Sin embargo, el principal desafío estratégico es: caída de engagement en publicaciones de venta directa (el público rechaza la venta agresiva sin contexto de valor previo). Para el siguiente ciclo, se requiere priorizar ganchos orientados a deseo y llamados a la acción de fricción cero.
 
 ### 🔍 Hallazgos Clave:
 - El alcance total creció +18.4%, logrando 38,450 personas alcanzadas.
-- Excelente eficiencia de conversión comercial (0.244% de alcance convertido a mensajes).
-- **Cuello de Botella Principal:** Escalabilidad de alcance para sostener la alta demanda de cotizaciones.
+- Conversión comercial de 0.244% del alcance a mensajes.
+- **Cuello de Botella Principal:** Caída de engagement en publicaciones de venta directa (el público rechaza la venta agresiva sin contexto de valor previo).
 
 ### 🧩 Situaciones Detectadas:
 - 🟡 **Caída de engagement en publicaciones de venta directa** — El público rechaza la venta agresiva sin contexto de valor previo.  
@@ -80,7 +80,7 @@ Alcance: 38,450 (+18.4%) · Mensajes de venta: 94 (+28.5%) · Seguidores nuevos:
 1. Pasar de 'Cómpranos hoy' a contenido de deseo, solución de problemas y prueba de retorno de inversión.
 2. Duplicar la frecuencia de 'Proyectos Terminados' con estructura 'Antes / Proceso / Entrega final'.
 3. Publicar guías de costos, comparativas de materiales y checklists de errores comunes antes de contratar.
-4. Duplicar la frecuencia de publicaciones sobre 'Proyectos Terminados' utilizando formato 'video'.
+4. Sustituir llamados a la acción genéricos ('visita nuestro perfil') por CTAs directos a cotización en WhatsApp/Inbox.
 
 ---
 

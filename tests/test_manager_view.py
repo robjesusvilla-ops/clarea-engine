@@ -39,6 +39,21 @@ class TestManagerView(unittest.TestCase):
         v = view_for(summary(HEALTHY, messages_growth_pct=-5.0))
         self.assertEqual(v.status, "alerta")
 
+    def test_diagnosis_and_manager_view_agree_on_bottleneck(self):
+        s = summary([post("a", "A", 20000, likes=50, comments=5, messages=5)])
+        insight = DiagnosisEngine.generate_local_insight(s)
+        v = ManagerViewGenerator.generate(s, insight)
+        self.assertIn("pocos mensajes", insight.primary_growth_bottleneck)
+        self.assertIn("pocos mensajes", v.bottleneck)
+
+    def test_actions_are_not_repeated(self):
+        from pathlib import Path
+        from clarea.core.parser import MetricParser
+        s = MetricParser.from_json_file(Path(__file__).parent.parent / "examples" / "sample_facebook_metrics.json")
+        actions = DiagnosisEngine.generate_local_insight(s).recommended_actions
+        self.assertEqual(len(actions), len(set(actions)))
+        self.assertEqual(sum("Proyectos Terminados" in a for a in actions), 1)
+
     def test_markdown_contains_all_blocks(self):
         md = ManagerViewGenerator.to_markdown(view_for(summary(HEALTHY)))
         for block in ("Vista Gerente", "Estado:", "Logro principal", "Cuello de botella", "Próxima decisión"):

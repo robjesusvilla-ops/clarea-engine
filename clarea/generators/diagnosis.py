@@ -2,7 +2,7 @@ from typing import Dict, Any, List
 from clarea.core.models import PeriodSummary, DiagnosticInsight
 from clarea.core.analyzer import MetricAnalyzer
 from clarea.core.rules import evaluate_rules
-from clarea.core.attribution import attribute
+from clarea.core.attribution import FORMAT_LABELS, attribute
 
 class DiagnosisEngine:
     """Generates the signature 'Interpretado por Clarea' business decision breakdown."""
@@ -17,7 +17,10 @@ class DiagnosisEngine:
         ranked_formats = analyzer.rank_formats()
 
         best_topic = ranked_topics[0]["topic"] if ranked_topics else "General"
-        best_format = ranked_formats[0]["format"] if ranked_formats else "Photo"
+        best_format = ranked_formats[0]["format"] if ranked_formats else "photo"
+        best_format = FORMAT_LABELS.get(best_format, best_format).lower()
+        rule_findings = evaluate_rules(summary)
+        problem = next((f for f in rule_findings if f.severity in ("critico", "alerta")), None)
 
         # Construct diagnosis logic
         findings = []
@@ -26,7 +29,15 @@ class DiagnosisEngine:
         else:
             findings.append(f"El alcance total se situó en {summary.total_reach:,} personas alcanzadas.")
 
-        if vanity_ratio > 3.0:
+        if problem:
+            # The rules engine is the source of truth for the bottleneck, so the
+            # diagnosis and the Manager View never disagree.
+            bottleneck = f"{problem.title} ({problem.diagnosis[0].lower() + problem.diagnosis[1:].rstrip('.')})."
+            if vanity_ratio > 3.0:
+                findings.append(f"Ratio de vanidad elevado ({vanity_ratio}): muchos 'likes' y pocas cotizaciones ({conv_rate}%).")
+            else:
+                findings.append(f"Conversión comercial de {conv_rate}% del alcance a mensajes.")
+        elif vanity_ratio > 3.0:
             bottleneck = "Conversión de atención a mensajes comerciales (fuga en el embudo de ventas)."
             findings.append(f"Ratio de vanidad elevado ({vanity_ratio}): alto volumen de 'likes' con baja tasa de solicitud de cotizaciones ({conv_rate}%).")
         else:
@@ -35,11 +46,9 @@ class DiagnosisEngine:
 
         summary_text = (
             f"{summary.brand_name} está capturando atención sólida en {summary.platform}, especialmente cuando publica contenido sobre '{best_topic}' en formato '{best_format}'. "
-            f"Sin embargo, el principal desafío estratégico es {bottleneck.lower()} "
+            f"Sin embargo, el principal desafío estratégico es: {bottleneck[0].lower() + bottleneck[1:]} "
             f"Para el siguiente ciclo, se requiere priorizar ganchos orientados a deseo y llamados a la acción de fricción cero."
         )
-
-        rule_findings = evaluate_rules(summary)
 
         generic_actions = [
             f"Duplicar la frecuencia de publicaciones sobre '{best_topic}' utilizando formato '{best_format}'.",
@@ -47,9 +56,15 @@ class DiagnosisEngine:
             "Crear contenidos educativos de dolor (costos, errores comunes, antes vs después) para filtrar prospectos calificados.",
             "Medir el retorno semanal por número de cotizaciones generadas en lugar de likes acumulados."
         ]
-        # Rule prescriptions come first; generic actions fill the gaps.
+        # Rule prescriptions come first; generic actions fill the gaps without
+        # repeating advice a rule already gave about the best topic.
         actions = [f.prescription for f in rule_findings]
-        actions += generic_actions[:max(0, 4 - len(actions))]
+        topic_covered = any(best_topic in f.prescription for f in rule_findings)
+        for action in generic_actions[1:] if topic_covered else generic_actions:
+            if len(actions) >= 4:
+                break
+            if action not in actions:
+                actions.append(action)
 
         from clarea.generators.hooks import HookGenerator
         texts = [summary.brand_name] + [f"{p.topic} {p.caption_preview or ''}" for p in summary.posts]
