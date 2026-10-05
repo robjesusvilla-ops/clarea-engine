@@ -60,23 +60,21 @@ hacer y cómo hacerlo**, no solo saber cómo le fue.
 - **Robert Villa**: idea, producto y experiencia en redes sociales.
 - **Hermano (programador)**: apoyo en desarrollo.
 
-## Estado actual (septiembre 2026)
+## Estado actual (octubre 2026)
 
-- Existe el motor en Python: lee métricas (JSON/CSV), calcula conversión y
-  relación vanidad/negocio, genera diagnóstico, hooks, CTAs y reporte en Markdown.
-- También funciona como servidor MCP para usarse desde Claude.
-- **Todavía no hay interfaz, diseño ni pruebas con usuarios reales.**
-- Limitación conocida: los hooks y CTAs están escritos a mano para un solo rubro
-  (piscinas/construcción). Hay que generalizarlos.
+- Motor en Python con las 6 reglas maestras, Vista Gerente con semáforo, qué funcionó y qué falló, ranking de posts y hooks/CTAs por rubro con su explicación.
+- Lee el CSV que exporta Meta Business Suite y la plantilla propia; compara contra el periodo anterior.
+- Conector de solo lectura con la API de Meta, diagnóstico opcional redactado con Claude.
+- App web multi-cliente, dashboard HTML, reporte Markdown, envío por correo y mensaje para WhatsApp.
+- **Pendiente:** validar con datos reales de Qhatai y ajustar umbrales y textos con esa experiencia.
 
 ## Hoja de ruta por fases
 
-1. **Cerebro de Clarea**: pasar la experiencia en redes a reglas y contenido
-   (qué recomendar según los datos, explicaciones de hook/CTA por rubro).
-2. **Facebook con datos reales**: conexión segura a la API de Meta, solo lectura.
-3. **Reportes automáticos** por correo (luego WhatsApp).
-4. **App web** básica: conectar cuenta y ver diagnóstico.
-5. **Instagram** y otras redes.
+1. ✅ **Cerebro de Clarea**: reglas, Vista Gerente, hooks y CTAs por rubro.
+2. ✅ **Facebook con datos reales**: CSV de Meta y API de solo lectura. Falta probar con Qhatai.
+3. ✅ **Reportes** por correo y mensaje para WhatsApp (envío automático por WhatsApp pendiente).
+4. ✅ **App web** multi-cliente.
+5. ⬜ **Instagram**, roles agencia/cliente y pagos.
 
 ## Preguntas abiertas
 

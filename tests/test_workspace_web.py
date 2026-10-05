@@ -112,6 +112,22 @@ class TestWebApp(unittest.TestCase):
         self.assertIn("alcance", r.text)
 
 
+class TestEnvFile(unittest.TestCase):
+    def test_loads_without_overriding(self):
+        from clarea.cli import load_env_file
+        with tempfile.TemporaryDirectory() as tmp:
+            env = Path(tmp) / ".env"
+            env.write_text('# comment\nexport CLAREA_T1="uno"\nCLAREA_T2=dos\nCLAREA_T3=\n', encoding="utf-8")
+            os.environ["CLAREA_T2"] = "ya-estaba"
+            try:
+                load_env_file(env)
+                self.assertEqual(os.environ["CLAREA_T1"], "uno")
+                self.assertEqual(os.environ["CLAREA_T2"], "ya-estaba")
+            finally:
+                for k in ("CLAREA_T1", "CLAREA_T2", "CLAREA_T3"):
+                    os.environ.pop(k, None)
+
+
 class TestClientCli(unittest.TestCase):
     def test_add_import_report(self):
         runner = CliRunner()
