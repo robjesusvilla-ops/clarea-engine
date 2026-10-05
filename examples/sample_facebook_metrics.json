@@ -1,6 +1,7 @@
 {
   "brand_name": "Qhatai Piscinas",
   "platform": "Facebook",
+  "industry": "piscinas",
   "period_label": "Mayo 2026",
   "total_reach": 38450,
   "reach_growth_pct": 18.4,
@@ -74,6 +75,70 @@
       "messages_inquired": 1,
       "published_date": "2026-05-16",
       "caption_preview": "Feliz día a todo nuestro equipo de ingenieros y operarios."
+    },
+    {
+      "id": "post_05",
+      "content_type": "carousel",
+      "topic": "Renders / Diseños 3D",
+      "reach": 4200,
+      "impressions": 5100,
+      "interactions": 150,
+      "likes": 122,
+      "comments": 6,
+      "shares": 4,
+      "saves": 18,
+      "clicks": 30,
+      "messages_inquired": 3,
+      "published_date": "2026-05-19",
+      "caption_preview": "Así quedaría tu piscina: diseño 3D para una casa en Cieneguilla."
+    },
+    {
+      "id": "post_06",
+      "content_type": "photo",
+      "topic": "Promoción",
+      "reach": 3600,
+      "impressions": 4300,
+      "interactions": 90,
+      "likes": 80,
+      "comments": 4,
+      "shares": 2,
+      "saves": 4,
+      "clicks": 25,
+      "messages_inquired": 4,
+      "published_date": "2026-05-22",
+      "caption_preview": "Oferta de temporada: 10% de descuento en piscinas cotizadas en junio."
+    },
+    {
+      "id": "post_07",
+      "content_type": "video",
+      "topic": "Mantenimiento & Costos",
+      "reach": 4800,
+      "impressions": 6200,
+      "interactions": 230,
+      "likes": 130,
+      "comments": 30,
+      "shares": 15,
+      "saves": 55,
+      "clicks": 60,
+      "messages_inquired": 6,
+      "published_date": "2026-05-26",
+      "caption_preview": "¿Cuánto cuesta mantener una piscina al mes? Te lo explicamos."
+    },
+    {
+      "id": "post_08",
+      "content_type": "photo",
+      "topic": "Institucional / Saludos",
+      "reach": 2600,
+      "impressions": 2900,
+      "interactions": 60,
+      "likes": 54,
+      "comments": 4,
+      "shares": 1,
+      "saves": 1,
+      "clicks": 5,
+      "messages_inquired": 0,
+      "published_date": "2026-05-29",
+      "caption_preview": "Feliz Día del Trabajador a todo nuestro equipo."
     }
   ]
 }

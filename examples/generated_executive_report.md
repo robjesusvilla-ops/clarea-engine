@@ -5,13 +5,13 @@
 
 ## 🚦 Vista Gerente — Qhatai Piscinas (Mayo 2026)
 
-**Estado: 🟢 Saludable** — La cuenta genera mensajes de venta de forma sostenida.
+**Estado: 🟡 Alerta** — Caída de engagement en publicaciones de venta directa
 
 | | |
 | :--- | :--- |
 | 🏆 **Logro principal** | Los mensajes de venta crecieron +28.5% (94 en el periodo). |
-| 🚧 **Cuello de botella** | Escalabilidad de alcance para sostener la alta demanda de cotizaciones. |
-| 🎯 **Próxima decisión** | Publicar guías de costos, comparativas de materiales y checklists de errores comunes antes de contratar. |
+| 🚧 **Cuello de botella** | Caída de engagement en publicaciones de venta directa. El público rechaza la venta agresiva sin contexto de valor previo. |
+| 🎯 **Próxima decisión** | Pasar de 'Cómpranos hoy' a contenido de deseo, solución de problemas y prueba de retorno de inversión. |
 
 Alcance: 38,450 (+18.4%) · Mensajes de venta: 94 (+28.5%) · Seguidores nuevos: 210
 
@@ -31,7 +31,7 @@ Alcance: 38,450 (+18.4%) · Mensajes de venta: 94 (+28.5%) · Seguidores nuevos:
 ## 🧠 2. Diagnóstico Estratégico (Interpretado por Clarea)
 
 > **Resumen Ejecutivo:**  
-> Qhatai Piscinas está capturando atención sólida en Facebook, especialmente cuando publica contenido sobre 'Proyectos Terminados' en formato 'photo'. Sin embargo, el principal desafío estratégico es escalabilidad de alcance para sostener la alta demanda de cotizaciones. Para el siguiente ciclo, se requiere priorizar ganchos orientados a deseo y llamados a la acción de fricción cero.
+> Qhatai Piscinas está capturando atención sólida en Facebook, especialmente cuando publica contenido sobre 'Proyectos Terminados' en formato 'video'. Sin embargo, el principal desafío estratégico es escalabilidad de alcance para sostener la alta demanda de cotizaciones. Para el siguiente ciclo, se requiere priorizar ganchos orientados a deseo y llamados a la acción de fricción cero.
 
 ### 🔍 Hallazgos Clave:
 - El alcance total creció +18.4%, logrando 38,450 personas alcanzadas.
@@ -39,8 +39,14 @@ Alcance: 38,450 (+18.4%) · Mensajes de venta: 94 (+28.5%) · Seguidores nuevos:
 - **Cuello de Botella Principal:** Escalabilidad de alcance para sostener la alta demanda de cotizaciones.
 
 ### 🧩 Situaciones Detectadas:
+- 🟡 **Caída de engagement en publicaciones de venta directa** — El público rechaza la venta agresiva sin contexto de valor previo.  
+  *Dato:* Posts de venta: 2.5% de engagement vs 6.3% en el resto (1 de 8 posts).  
+  *Qué hacer:* Pasar de 'Cómpranos hoy' a contenido de deseo, solución de problemas y prueba de retorno de inversión.
+- 🟢 **'Proyectos Terminados' supera el promedio de la cuenta** — La prueba social y el resultado visible generan credibilidad inmediata.  
+  *Dato:* Convierte 0.33% del alcance en mensajes vs 0.14% del resto del contenido (2.5x).  
+  *Qué hacer:* Duplicar la frecuencia de 'Proyectos Terminados' con estructura 'Antes / Proceso / Entrega final'.
 - 🟢 **Muchos guardados en 'Mantenimiento & Costos'** — La audiencia está investigando y comparando proveedores activamente.  
-  *Dato:* 1.76% del alcance guarda este contenido vs 0.67% en el resto.  
+  *Dato:* 1.47% del alcance guarda este contenido vs 0.52% en el resto.  
   *Qué hacer:* Publicar guías de costos, comparativas de materiales y checklists de errores comunes antes de contratar.
 
 ---
@@ -50,17 +56,19 @@ Alcance: 38,450 (+18.4%) · Mensajes de venta: 94 (+28.5%) · Seguidores nuevos:
 | Categoría / Tema | Posts | Mensajes Generados | Alcance Promedio | Tasa de Conversión |
 | :--- | :--- | :--- | :--- | :--- |
 | **Proyectos Terminados** | 2 | **60** | 9,050 | `0.331%` |
-| **Mantenimiento & Costos** | 1 | **18** | 5,400 | `0.333%` |
-| **Institucional / Saludos** | 1 | **1** | 3,100 | `0.032%` |
+| **Mantenimiento & Costos** | 2 | **24** | 5,100 | `0.235%` |
+| **Promoción** | 1 | **4** | 3,600 | `0.111%` |
+| **Renders / Diseños 3D** | 1 | **3** | 4,200 | `0.071%` |
+| **Institucional / Saludos** | 2 | **1** | 2,850 | `0.018%` |
 
 ---
 
 ## ⚡ 4. Recomendaciones Accionables (Semana Siguiente)
 
-1. Publicar guías de costos, comparativas de materiales y checklists de errores comunes antes de contratar.
-2. Duplicar la frecuencia de publicaciones sobre 'Proyectos Terminados' utilizando formato 'photo'.
-3. Sustituir llamados a la acción genéricos ('visita nuestro perfil') por CTAs directos a cotización en WhatsApp/Inbox.
-4. Crear contenidos educativos de dolor (costos, errores comunes, antes vs después) para filtrar prospectos calificados.
+1. Pasar de 'Cómpranos hoy' a contenido de deseo, solución de problemas y prueba de retorno de inversión.
+2. Duplicar la frecuencia de 'Proyectos Terminados' con estructura 'Antes / Proceso / Entrega final'.
+3. Publicar guías de costos, comparativas de materiales y checklists de errores comunes antes de contratar.
+4. Duplicar la frecuencia de publicaciones sobre 'Proyectos Terminados' utilizando formato 'video'.
 
 ---
 
