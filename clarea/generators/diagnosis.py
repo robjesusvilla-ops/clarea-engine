@@ -2,6 +2,7 @@ from typing import Dict, Any, List
 from clarea.core.models import PeriodSummary, DiagnosticInsight
 from clarea.core.analyzer import MetricAnalyzer
 from clarea.core.rules import evaluate_rules
+from clarea.core.attribution import attribute
 
 class DiagnosisEngine:
     """Generates the signature 'Interpretado por Clarea' business decision breakdown."""
@@ -69,5 +70,6 @@ class DiagnosisEngine:
             rule_findings=rule_findings,
             industry=industry,
             hook_ideas=hook_ideas,
-            cta_ideas=cta_ideas
+            cta_ideas=cta_ideas,
+            attribution=attribute(summary)
         )

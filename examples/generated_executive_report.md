@@ -63,6 +63,18 @@ Alcance: 38,450 (+18.4%) · Mensajes de venta: 94 (+28.5%) · Seguidores nuevos:
 
 ---
 
+## ⚖️ Qué Funcionó y Qué Falló
+
+### ✅ Funcionó
+- **Proyectos Terminados** (tema) — Convierte 1.5x más que el promedio de la cuenta (0.33% vs 0.22%).
+
+### ❌ Falló
+- **Promoción** (tema) — Convierte 0.5x el promedio (0.11% vs 0.22%): no genera atención ni mensajes. *(1 publicación, dato preliminar)*
+- **Renders / Diseños 3D** (tema) — Convierte 0.3x el promedio (0.07% vs 0.22%): no genera atención ni mensajes. *(1 publicación, dato preliminar)*
+- **Institucional / Saludos** (tema) — Convierte 0.1x el promedio (0.02% vs 0.22%): no genera atención ni mensajes.
+
+---
+
 ## ⚡ 4. Recomendaciones Accionables (Semana Siguiente)
 
 1. Pasar de 'Cómpranos hoy' a contenido de deseo, solución de problemas y prueba de retorno de inversión.

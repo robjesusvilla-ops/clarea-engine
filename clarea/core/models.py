@@ -46,6 +46,18 @@ class RuleFinding(BaseModel):
     prescription: str
     evidence: str
 
+class AttributionItem(BaseModel):
+    dimension: str  # formato o tema
+    name: str
+    posts: int
+    reach: int
+    conversion_rate: float
+    engagement_rate: float
+    conversion_index: float = Field(..., description="Conversión del grupo / conversión de la cuenta")
+    verdict: str  # funciono, fallo, neutral
+    reason: str
+    preliminary: bool = Field(False, description="Basado en una sola publicación")
+
 class DiagnosticInsight(BaseModel):
     executive_summary: str
     vanity_vs_business_ratio: float
@@ -60,3 +72,4 @@ class DiagnosticInsight(BaseModel):
     industry: str = "general"
     hook_ideas: List[ContentIdea] = []
     cta_ideas: List[ContentIdea] = []
+    attribution: List[AttributionItem] = []

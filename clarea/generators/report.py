@@ -63,6 +63,21 @@ class ReportGenerator:
         md.append("")
         md.append("---")
         md.append("")
+        worked = [a for a in insight.attribution if a.verdict == "funciono"]
+        failed = [a for a in insight.attribution if a.verdict == "fallo"]
+        if worked or failed:
+            md.append("## ⚖️ Qué Funcionó y Qué Falló")
+            md.append("")
+            for title, group in (("✅ Funcionó", worked), ("❌ Falló", failed)):
+                if not group:
+                    continue
+                md.append(f"### {title}")
+                for a in group:
+                    note = " *(1 publicación, dato preliminar)*" if a.preliminary else ""
+                    md.append(f"- **{a.name}** ({a.dimension}) — {a.reason}{note}")
+                md.append("")
+            md.append("---")
+            md.append("")
         md.append("## ⚡ 4. Recomendaciones Accionables (Semana Siguiente)")
         md.append("")
         for idx, act in enumerate(insight.recommended_actions, 1):

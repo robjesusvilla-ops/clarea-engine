@@ -129,6 +129,11 @@ button.copy{background:none;border:1px solid var(--line);color:var(--muted);bord
   padding:4px 12px;font:inherit;font-size:.75rem;cursor:pointer}
 button.copy:hover{color:var(--text);border-color:var(--accent)}
 
+.verdict-card{display:grid;gap:12px;align-content:start;border-top:2px solid var(--status)}
+.attr{display:grid;gap:6px;padding-block:10px;border-bottom:1px solid var(--line)}
+.attr:last-child{border-bottom:0}
+.attr .top{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;align-items:baseline}
+.attr .bar span{background:var(--status)}
 footer{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:var(--faint);font-size:.8rem}
 
 @media (max-width:860px){
@@ -253,6 +258,28 @@ class HtmlDashboard:
                 f'<span class="num">{r["score"]}</span></div></td></tr>'
             )
 
+        def attr_list(verdict):
+            items = [a for a in insight.attribution if a.verdict == verdict]
+            if not items:
+                return '<p class="empty">Nada destacable en este periodo.</p>'
+            return "".join(
+                f'<div class="attr"><div class="top"><strong>{e(a.name)}</strong>'
+                f'<span class="tag">{e(a.dimension)} · {a.posts} post{"s" if a.posts != 1 else ""}</span></div>'
+                f'<p class="why">{e(a.reason)}{" Dato preliminar." if a.preliminary else ""}</p>'
+                f'<div class="bar" aria-hidden="true"><span style="width:{min(100, a.conversion_index * 50):.0f}%"></span></div></div>'
+                for a in items
+            )
+        attribution_html = ""
+        if insight.attribution:
+            attribution_html = (
+                '<section><div class="section-head"><h2>Qué funcionó y qué falló</h2>'
+                '<span class="tag">Por formato y tema · vs promedio de la cuenta</span></div>'
+                '<div class="cols">'
+                f'<div class="card s-ok verdict-card"><span class="pill">Funcionó</span>{attr_list("funciono")}</div>'
+                f'<div class="card s-crit verdict-card"><span class="pill">Falló</span>{attr_list("fallo")}</div>'
+                '</div></section>'
+            )
+
         findings_list = "".join(f"<li>{e(x)}</li>" for x in insight.key_findings)
         actions = "".join(f"<li><span>{e(a)}</span></li>" for a in insight.recommended_actions)
         options = "".join(
@@ -310,6 +337,8 @@ class HtmlDashboard:
       <tbody>{rows}</tbody>
     </table></div>
   </section>
+
+  {attribution_html}
 
   <section class="card" style="display:grid;gap:16px">
     <div class="section-head"><h2>Qué hacer la próxima semana</h2><span class="tag">Recomendaciones</span></div>

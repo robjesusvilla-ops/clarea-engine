@@ -33,6 +33,7 @@ def handle_analyze_metrics(arguments: Dict[str, Any]) -> Dict[str, Any]:
         "executive_summary": insight.executive_summary,
         "manager_view": manager_view.model_dump(),
         "rule_findings": [f.model_dump() for f in insight.rule_findings],
+        "what_worked_and_failed": [a.model_dump() for a in insight.attribution],
         "markdown_report": markdown_report
     }
 
