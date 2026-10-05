@@ -86,6 +86,11 @@ class TestWebApp(unittest.TestCase):
         self.assertIn("Qhatai Piscinas", home)
         md = self.client.get("/clients/qhatai-piscinas/periods/2026-05/reporte.md")
         self.assertIn("Vista Gerente", md.text)
+        self.assertIn("wa.me", self.client.get("/clients/qhatai-piscinas/periods/2026-05").text)
+        os.environ.pop("CLAREA_SMTP_HOST", None)
+        sent = self.client.post("/clients/qhatai-piscinas/periods/2026-05/send")
+        self.assertIn("se guardó para revisarlo", sent.text)
+        self.assertEqual(len(list((Path(self.tmp.name) / "outbox").glob("*.eml"))), 1)
 
     def test_bad_upload_shows_error(self):
         self.client.post("/clients", data={"name": "Kenji"})

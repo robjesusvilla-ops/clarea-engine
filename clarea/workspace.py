@@ -45,6 +45,7 @@ class Workspace:
     def __init__(self, root: Optional[Path] = None):
         self.root = Path(root or os.environ.get(DATA_DIR_ENV, "clarea_data"))
         self.clients_dir = self.root / "clients"
+        self.outbox_dir = self.root / "outbox"
 
     # Clients -----------------------------------------------------------
     def _client_dir(self, slug: str) -> Path:

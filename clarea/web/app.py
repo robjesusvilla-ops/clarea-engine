@@ -18,6 +18,7 @@ from fastapi.responses import HTMLResponse, PlainTextResponse, RedirectResponse,
 
 from clarea import __version__
 from clarea.core.parser import MetricParser
+from clarea.delivery import whatsapp_link, whatsapp_message
 from clarea.generators.html_dashboard import CSS, FONTS, STATUS, HtmlDashboard
 from clarea.generators.report import ReportGenerator
 from clarea.knowledge.hooks_library import INDUSTRIES
@@ -236,6 +237,7 @@ def create_app(workspace: Optional[Workspace] = None) -> FastAPI:
         nav = (f'<nav class="nav"><a href="/">Clientes</a><span class="muted">/</span>'
                f'<a href="/clients/{slug}">{e(client.name)}</a><span class="muted">/</span>'
                f'<a href="/clients/{slug}/periods/{key}/reporte.md">Descargar reporte</a>'
+               f'<a href="{e(whatsapp_link(whatsapp_message(r), client.whatsapp))}" target="_blank" rel="noopener">Compartir por WhatsApp</a>'
                f'<form method="post" action="/clients/{slug}/periods/{key}/send" style="margin:0">'
                f'<button class="copy" type="submit">Enviar por correo</button></form></nav>')
         html = HtmlDashboard.render(r.summary, r.insight, nav_html=nav)
@@ -249,6 +251,20 @@ def create_app(workspace: Optional[Workspace] = None) -> FastAPI:
             raise HTTPException(404, "Periodo no encontrado")
         return Response(ReportGenerator.to_markdown(r.summary, r.insight), media_type="text/markdown; charset=utf-8",
                         headers={"Content-Disposition": f'attachment; filename="clarea-{slug}-{key}.md"'})
+
+    @app.post("/clients/{slug}/periods/{key}/send")
+    def send_period(slug: str, key: str):
+        from clarea.delivery import send_report
+        try:
+            client = ws.get_client(slug)
+            r = run(slug, key)
+            if not client.report_emails:
+                raise ValueError("Este cliente no tiene correos para el reporte.")
+            outcome = send_report(r, client.report_emails, ws.outbox_dir)
+        except (KeyError, ValueError) as exc:
+            return RedirectResponse(f"/clients/{slug}?error={_q(exc)}", status_code=303)
+        param = "msg" if outcome.sent or outcome.eml_path else "error"
+        return RedirectResponse(f"/clients/{slug}?{param}={_q(outcome.detail)}", status_code=303)
 
     @app.get("/plantilla.csv")
     def template_csv():

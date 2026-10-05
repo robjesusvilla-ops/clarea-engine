@@ -217,6 +217,39 @@ def client_report(
         console.print(f"[bold green]✓[/bold green] Dashboard guardado en [cyan]{html}[/cyan]")
 
 
+@client_app.command("send")
+def client_send(
+    slug: str = typer.Argument(..., help="Id del cliente"),
+    key: Optional[str] = typer.Option(None, "--key", "-k", help="Periodo AAAA-MM (por defecto, el último)"),
+    to: Optional[list[str]] = typer.Option(None, "--to", help="Correo de destino (por defecto, los del cliente)"),
+    ai: bool = typer.Option(False, "--ai", help="Diagnóstico redactado con Claude"),
+):
+    """Envía el reporte por correo y prepara el mensaje de WhatsApp."""
+    from clarea.delivery import send_report, whatsapp_link, whatsapp_message
+    from clarea.workspace import Workspace
+    ws = Workspace()
+    try:
+        client = ws.get_client(slug)
+        periods = ws.list_periods(slug)
+        if not periods:
+            raise ValueError("Este cliente no tiene periodos.")
+        key = key or periods[-1].key
+        result = run_analysis(ws.get_period(slug, key), ws.previous_period(slug, key), use_ai=ai)
+        recipients = list(to or client.report_emails)
+        if recipients:
+            outcome = send_report(result, recipients, ws.outbox_dir)
+            color = "green" if outcome.sent else "yellow"
+            console.print(f"[{color}]{outcome.detail}[/{color}]" + (f" Archivo: {outcome.eml_path}" if outcome.eml_path else ""))
+        else:
+            console.print("[yellow]El cliente no tiene correos.[/yellow] Agrégalos con --to.")
+    except (KeyError, ValueError) as e:
+        console.print(f"[red]Error:[/red] {e}")
+        raise typer.Exit(code=1)
+    message = whatsapp_message(result)
+    console.print(Panel(message, title="Mensaje para WhatsApp", border_style="green"))
+    console.print(f"Ábrelo listo para enviar: {whatsapp_link(message, client.whatsapp)}")
+
+
 @app.command()
 def web(
     host: str = typer.Option("127.0.0.1", help="Dirección donde escuchar"),
